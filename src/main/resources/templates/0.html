@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<meta charset="UTF-8"/>
+<head>
+    <title>1聊天框</title>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src=" https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        //ws /ws 的endpoint
+        var sock = new SockJS('http://127.0.0.1:10200/ws?userId=0'); //跟你的WebSocketConfig中配置要一致
+        var stomp = Stomp.over(sock);
+        var msg_id = 0;
+        //建立连接监听
+        stomp.connect({}, function (frame) {
+            //订阅 /user/topic/chat 发送的消息，这里与
+            //在控制器的messagingTemplate.convertAndSendToUser中定义的订阅地址保持一致
+            //这里多了 /user ，并且这个 /user是必须的，使用了 /user 才会将消息发送到指定用户
+            stomp.subscribe("/user/topic/chat", function handleChatNotification(message) {
+                var obj = JSON.parse(message.body);
+                $("#output").append('<b>chat -- ' + obj.from_id +' : '+ obj.content + '</b><br/>');
+            });
+            stomp.subscribe("/user/topic/result", function handleResultNotification(message) {
+                var obj = JSON.parse(message.body);
+                msg_id++;
+                // $("#output").append('<b>result -- ' + obj.data.message_id + '</b><br/>');
+            });
+        });
+        //发送私有消息指定的人能收到
+        function sendPrivateMsg() {
+            stomp.send("/app/chat", {}, JSON.stringify({
+                'message_id': msg_id,
+                'from_id': 1,
+                'to_id': $("#receiver").val(),    //接收人
+                'type': 'text',
+                'timeStamp': "111",
+                'content': $("#text").val()         //消息内容
+            }));
+        }
+        //断开连接
+        function stop() {
+            sock.close();
+        }
+    </script>
+</head>
+<body>
+<div>
+    <textarea rows="4" cols="60" name="text" id="text"> </textarea> <br/>
+    接收人:
+    <input id="receiver" value=""/> <br/>
+    <input type="button" value="私有消息" onclick="sendPrivateMsg()"/>
+    <input id="stop" type="button" onclick="stop()" value="断开"/>
+
+</div>
+<div id="output"></div>
+</body>
+</html>
