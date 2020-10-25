@@ -3,10 +3,7 @@ package com.cad.im.util;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author lijundi
- * @date 2020/1/9 13:37
- */
+
 public enum ResultCode {
     /* 成功状态码 */
     SUCCESS(1, "成功"),

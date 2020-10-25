@@ -1,13 +1,14 @@
 package com.cad.im.service;
 
+import com.cad.im.entity.http.LoginInfo;
+import com.cad.im.entity.mysql.User;
 import com.cad.im.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author lijundi
- * @date 2020/1/9 15:52
- */
+import java.util.List;
+
+
 @Service
 public class UserService {
     @Autowired
@@ -16,4 +17,22 @@ public class UserService {
     public Boolean isUserExist(Integer userId){
         return userRepository.findById(userId).isPresent();
     }
+
+    public User login(LoginInfo loginInfo){
+        // 获取openId和session
+
+        // 检查是否为第一次登录，目前根据nickName判断
+        List<User> userList = userRepository.findByNickName(loginInfo.getNickName());
+        if(userList.size()==0){
+            User user = new User(loginInfo.getNickName(), loginInfo.getAvatarUrl());
+            user.setIdentity("patient");
+            return userRepository.save(user);
+        }else{
+            // 更新头像等
+            User user = userList.get(0);
+            user.setAvatarUrl(loginInfo.getAvatarUrl());
+            return userRepository.save(user);
+        }
+    }
+
 }

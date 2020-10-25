@@ -41,7 +41,7 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
                     }
                 })
                 .addInterceptors(new MyHandShakeInterceptor())
-                .setAllowedOrigins("*").withSockJS();
+                .setAllowedOrigins("*");
     }
 
     @Override

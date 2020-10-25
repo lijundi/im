@@ -2,26 +2,23 @@ package com.cad.im.entity.mysql;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
-/**
- * @author lijundi
- * @date 2020/1/8 12:23
- */
+
 @Data
 @Entity
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chatMessage_id;
-    private Integer from_id;
-    private Integer to_id;
-    private String type;
+    private Long id;
+    private Integer fromId;
+    private Integer toId;
+    @Column(length = 50)
+    private String type; //text,image
     private String content;
-    private String timeStamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     private Boolean offline; // 离线消息标记
 
     public ChatMessage(){}

@@ -1,92 +1,101 @@
 [toc]
 
+# 高血压智能预问诊助手-WebSocket接口文档
 
+## 1 订阅接口
 
-## WebSocket
+### 1.1 单聊消息
 
-### 一、订阅接口
-
-#### 1. 订阅单聊消息
-
-##### URL
-
-> /user/topic/chat
-
-##### 接口说明
+#### 接口描述
 
 > 接收单聊消息
 
-##### 返回数据
+#### URL
 
-> | 返回字段   | 字段类型 | 说明                                 |
-> | :--------- | :------- | ------------------------------------ |
-> | message_id | int      | 当前会话id                           |
-> | from_id    | int      | 发送方id                             |
-> | to_id      | int      | 接收方id                             |
-> | type       | String   | 消息类型。“text”：文本；“file”：文件 |
-> | content    | String   | 消息内容。file类型为URL              |
-> | timeStamp  | String   | 发送消息的时间戳                     |
+> /user/topic/chat
 
-#### 2. 订阅应答消息
+#### 返回参数
 
-##### URL
+| 字段名    | 类型  | 描述               |
+| :-------- | :---- | ------------------ |
+| fromId    | int   | 发送方id           |
+| toId      | int   | 接收方id           |
+| type      | tring | 消息类型 text=文本 |
+| content   | tring | 消息内容           |
+| timeStamp | tring | 发送消息的时间戳   |
 
-> /user/topic/result
 
-##### 接口说明
 
-> 接收服务器应答消息
+### 1.2 机器人消息
 
-##### 返回数据
+#### 接口描述
 
-> | 返回字段 | 字段类型 | 说明     |
-> | :------- | :------- | :------- |
-> | code     | int      | 状态码   |
-> | msg      | String   | 状态信息 |
-> | data     | json     | 数据     |
+> 接收机器人回复消息
 
-### 二、请求接口
+#### URL
 
-#### 1. 发送单聊消息
+> /user/topic/robotChat
 
-##### URL
+#### 返回参数
 
-> /app/chat
+| 字段名        | 类型            | 描述                                |
+| :------------ | :-------------- | ----------------------------------- |
+| wsChatMessage | message         | 回复消息                            |
+| inputs        | string          | 与buttons字段互斥，表示血压值输入框 |
+| buttons       | array of button | 与inputs字段互斥，表示选择项        |
 
-##### 接口说明
+##### message
 
-> 发送一对一消息，返回成功状态码表示消息发送成功
+| 字段名    | 类型   | 描述               |
+| --------- | ------ | ------------------ |
+| fromId    | string | 消息发送方id       |
+| toId      | string | 消息接收方id       |
+| type      | string | 消息类型 text=文本 |
+| content   | string | 消息内容           |
+| timeStamp | string | 发送消息的时间戳   |
 
-##### 请求参数
+##### button
 
-> | 参数       | 必选 | 类型   | 说明                                 |
-> | :--------- | :--- | :----- | ------------------------------------ |
-> | message_id | ture | int    | 当前会话id                           |
-> | from_id    | ture | int    | 发送方id                             |
-> | to_id      | ture | int    | 接收方id                             |
-> | type       | ture | String | 消息类型。“text”：文本；“file”：文件 |
-> | content    | true | String | 消息内容。file类型为URL              |
-> | timeStamp  | ture | String | 发送消息的时间戳                     |
+| 字段名 | 类型   | 描述       |
+| ------ | ------ | ---------- |
+| title  | string | 选择项的值 |
 
-##### 返回数据
+##### 示例
 
-> | 返回字段 | 字段类型 | 说明                                   |
-> | :------- | :------- | :------------------------------------- |
-> | code     | int      | 状态码。成功：1；失败：0               |
-> | msg      | String   | 状态信息。成功：“成功”；失败：“失败”   |
-> | data     | json     | 数据。成功：发送消息的会话id；失败：空 |
+- inputs消息
 
-##### 接口示例
-
-> 返回结果
-
-```json
+```JSON
 {
-    "code": 1,
-    "msg": "成功",
-    "data": {
-        "message_id": 55
-    }
+    "wsChatMessage":{
+        "fromId":"xxx1",
+        "toId":"xxx2",
+        "type":"text",
+        "content":"hello",
+        "timeStamp":"2020-10-10 21:51:57"
+    },
+    "inputs":"inputs"
+}
+```
+
+- buttons消息
+
+```JSON
+{
+    "wsChatMessage":{
+        "fromId":"xxx1",
+        "toId":"xxx2",
+        "type":"text",
+        "content":"hello",
+        "timeStamp":"2020-10-10 21:51:57"
+    },
+    "buttons":[
+        {
+            "title":"1"
+        },
+        {
+            "title":"2"
+        }
+    ]
 }
 ```
 
@@ -94,3 +103,114 @@
 
 
 
+## 2 请求接口
+
+### 2.1 单聊消息
+
+#### 接口描述
+
+> 发送一对一单聊消息，
+
+#### URL
+
+> /user/topic/chat
+
+#### 请求参数
+
+| 参数名    | 类型   | 是否必填 | 描述               |
+| :-------- | :----- | -------- | ------------------ |
+| fromId    | int    | 是       | 发送方id           |
+| toId      | int    | 是       | 接收方id           |
+| type      | String | 是       | 消息类型 text=文本 |
+| content   | String | 是       | 消息内容           |
+| timeStamp | String | 是       | 发送消息的时间戳   |
+
+#### 返回参数
+
+| 返回字段 | 字段类型 | 说明     |
+| :------- | :------- | :------- |
+| code     | int      | 状态码   |
+| msg      | string   | 状态信息 |
+|          | -        | -        |
+
+##### 示例
+
+- 响应成功
+
+```JSON
+{
+    "code":1,
+    "msg":"成功",
+    "data":null
+}
+```
+
+- 响应失败
+
+```JSON
+{
+    "code":0,
+    "msg":"失败",
+    "data":null
+}
+```
+
+
+
+### 2.2 机器人消息
+
+#### 接口描述
+
+> 向机器人发送聊天消息
+
+#### URL
+
+> /user/topic/robotChat
+
+#### 请求参数
+
+| 参数名    | 类型   | 是否必填 | 描述               |
+| :-------- | :----- | -------- | ------------------ |
+| fromId    | int    | 是       | 发送方id           |
+| toId      | int    | 是       | 接收方id           |
+| type      | String | 是       | 消息类型 text=文本 |
+| content   | String | 是       | 消息内容           |
+| timeStamp | String | 是       | 发送消息的时间戳   |
+
+#### 返回参数
+
+| 返回字段 | 字段类型 | 说明     |
+| :------- | :------- | :------- |
+| code     | int      | 状态码   |
+| msg      | string   | 状态信息 |
+| data     | -        | -        |
+
+##### 示例
+
+- 响应成功
+
+```JSON
+{
+    "code":1,
+    "msg":"成功",
+    "data":null
+}
+```
+
+- 响应失败
+
+```JSON
+{
+    "code":0,
+    "msg":"失败",
+    "data":null
+}
+```
+
+
+
+
+
+------
+
+修改时间：2020.10.22

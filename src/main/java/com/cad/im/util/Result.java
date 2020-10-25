@@ -4,10 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * @author lijundi
- * @date 2020/1/9 13:39
- */
+
 @Data
 public class Result implements Serializable {
     private static final long serialVersionUID = 7988823970938566753L;

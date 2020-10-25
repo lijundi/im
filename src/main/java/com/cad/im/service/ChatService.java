@@ -1,5 +1,7 @@
 package com.cad.im.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.mysql.ChatMessage;
 import com.cad.im.entity.websocket.WsChatMessage;
 import com.cad.im.repository.ChatMessageRepository;
@@ -24,11 +26,11 @@ public class ChatService {
     // 存储--效率低
     public void storeChatMessage(WsChatMessage wsChatMessage) {
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setFrom_id(wsChatMessage.getFrom_id());
-        chatMessage.setTo_id(wsChatMessage.getTo_id());
+        chatMessage.setFromId(wsChatMessage.getFrom_id());
+        chatMessage.setToId(wsChatMessage.getTo_id());
         chatMessage.setContent(wsChatMessage.getContent());
         chatMessage.setType(wsChatMessage.getType());
-        chatMessage.setTimeStamp(wsChatMessage.getTimeStamp());
+//        chatMessage.setTimeStamp(wsChatMessage.getTimeStamp());
         chatMessage.setOffline(!sessionHandler.isOnline(String.valueOf(wsChatMessage.getTo_id())));
         chatMessageRepository.saveAndFlush(chatMessage);
     }
@@ -36,6 +38,11 @@ public class ChatService {
     // 转发
     public void forwardMessage(WsChatMessage wsChatMessage) {
         SMT.convertAndSendToUser(String.valueOf(wsChatMessage.getTo_id()), "/topic/chat", wsChatMessage);
+    }
+
+    // 转发机器人消息
+    public void forwardRobotMessage(JSONObject message, Integer to_id) {
+        SMT.convertAndSendToUser(String.valueOf(to_id), "/topic/robotChat", message);
     }
 
 }
