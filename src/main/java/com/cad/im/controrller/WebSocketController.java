@@ -61,7 +61,7 @@ public class WebSocketController {
             JSONObject[] msgObjects = robotService.sendMsgToRobot(wsChatMessage.getFrom_id(), wsChatMessage.getContent());
             if(msgObjects!=null){
                 for (JSONObject msgObject : msgObjects) {
-                    WsChatMessage wsChatMsg = new WsChatMessage(wsChatMessage.getMessage_id() + 1, 1,
+                    WsChatMessage wsChatMsg = new WsChatMessage(wsChatMessage.getMessage_id() + 1, "1",
                             wsChatMessage.getFrom_id(), "text", msgObject.getString("text"), "");
                     JSONObject message = new JSONObject();
                     message.put("wsChatMessage", wsChatMsg);
@@ -87,4 +87,6 @@ public class WebSocketController {
             return Result.failure(ResultCode.FAILURE);
         }
     }
+
+
 }

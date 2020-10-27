@@ -23,8 +23,8 @@ public class UserController {
         try{
             User user = userService.login(loginInfo);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userId", user.getUserId());
-            jsonObject.put("identity", user.getIdentity());
+            jsonObject.put("userId", user.getUser_id());
+            jsonObject.put("identity", user.getIdent());
             return Result.success(jsonObject);
         } catch (Exception ex){
             return Result.failure(ResultCode.FAILURE, ex.toString());

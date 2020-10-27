@@ -26,8 +26,8 @@ public class ChatService {
     // 存储--效率低
     public void storeChatMessage(WsChatMessage wsChatMessage) {
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setFromId(wsChatMessage.getFrom_id());
-        chatMessage.setToId(wsChatMessage.getTo_id());
+        chatMessage.setFrom_id(wsChatMessage.getFrom_id());
+        chatMessage.setTo_id(wsChatMessage.getTo_id());
         chatMessage.setContent(wsChatMessage.getContent());
         chatMessage.setType(wsChatMessage.getType());
 //        chatMessage.setTimeStamp(wsChatMessage.getTimeStamp());
@@ -41,7 +41,7 @@ public class ChatService {
     }
 
     // 转发机器人消息
-    public void forwardRobotMessage(JSONObject message, Integer to_id) {
+    public void forwardRobotMessage(JSONObject message, String to_id) {
         SMT.convertAndSendToUser(String.valueOf(to_id), "/topic/robotChat", message);
     }
 

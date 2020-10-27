@@ -9,15 +9,15 @@ import lombok.Data;
 @Data
 public class WsChatMessage {
     private Integer message_id;
-    private Integer from_id;
-    private Integer to_id;
+    private String from_id;
+    private String to_id;
     private String type;
     private String content;
     private String timeStamp;
 
     public WsChatMessage(){}
 
-    public WsChatMessage(Integer message_id, Integer from_id, Integer to_id, String type, String content, String timeStamp){
+    public WsChatMessage(Integer message_id, String from_id, String to_id, String type, String content, String timeStamp){
         this.message_id = message_id;
         this.from_id = from_id;
         this.to_id = to_id;

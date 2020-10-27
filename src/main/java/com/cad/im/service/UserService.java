@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public Boolean isUserExist(Integer userId){
+    public Boolean isUserExist(String userId){
         return userRepository.findById(userId).isPresent();
     }
 
@@ -25,12 +25,12 @@ public class UserService {
         List<User> userList = userRepository.findByNickName(loginInfo.getNickName());
         if(userList.size()==0){
             User user = new User(loginInfo.getNickName(), loginInfo.getAvatarUrl());
-            user.setIdentity("patient");
+            user.setIdent("patient");
             return userRepository.save(user);
         }else{
             // 更新头像等
             User user = userList.get(0);
-            user.setAvatarUrl(loginInfo.getAvatarUrl());
+            user.setAvatar_url(loginInfo.getAvatarUrl());
             return userRepository.save(user);
         }
     }

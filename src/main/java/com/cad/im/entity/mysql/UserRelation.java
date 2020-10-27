@@ -2,14 +2,12 @@ package com.cad.im.entity.mysql;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
 @Entity
+@Table(name="user_relation")
 public class UserRelation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RobotService {
 
-    public JSONObject[] sendMsgToRobot(Integer sender, String content){
+    public JSONObject[] sendMsgToRobot(String sender, String content){
 //        String url="http://10.108.211.136:5005/webhooks/rest/webhook";
 //        String url="http://127.0.0.1:5005/webhooks/rest/webhook";
         String url="http://114.67.200.39:10201/webhooks/rest/webhook";
@@ -20,7 +20,7 @@ public class RobotService {
         return responseEntity.getBody();
     }
 
-    public JSONObject sendRestartToRobot(Integer sender){
+    public JSONObject sendRestartToRobot(String sender){
 //        String url = "http://10.108.211.136:5005/conversations/" + String.valueOf(sender) + "/tracker/events";
 //        String url = "http://127.0.0.1:5005/conversations/" + String.valueOf(sender) + "/tracker/events";
         String url = "http://114.67.200.39:10201/conversations/" + String.valueOf(sender) + "/tracker/events";

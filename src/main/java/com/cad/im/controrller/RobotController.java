@@ -15,7 +15,7 @@ public class RobotController {
     RobotService robotService;
 
     @GetMapping("/restart")
-    public Result restart(Integer sender){
+    public Result restart(String sender){
         robotService.sendRestartToRobot(sender);
         return Result.success();
     }
