@@ -2,10 +2,7 @@ package com.cad.im.entity.profile;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -22,5 +19,6 @@ public class PreviousBloodPressureMeasurement {
     private String ordinary_blood_pressure; // 平时血压
     private String highest_blood_pressure; // 最高血压
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

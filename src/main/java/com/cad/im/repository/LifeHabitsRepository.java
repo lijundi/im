@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface LifeHabitsRepository extends JpaRepository<LifeHabits, Integer> {
-    public List<LifeHabits> findByUserId(Integer userId);
+    public List<LifeHabits> findByUserId(String userId);
 }

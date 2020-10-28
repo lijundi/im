@@ -5,6 +5,7 @@ import com.cad.im.repository.MedicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,16 +26,7 @@ public class MedicationService {
         return medicationRepository.getHistorys(userId);
     }
 
-    public void addMedication(String userId, String medicineName, String startTime, String endTime, String frequency, String medicineDose, String beforeBp, String afterBp){
-        Medication medication = new Medication();
-        medication.setUser_id(userId);
-        medication.setMedicine_name(medicineName);
-        medication.setStart_time(startTime);
-        medication.setEnd_time(endTime);
-        medication.setFrequency(frequency);
-        medication.setMedicine_dose(medicineDose);
-        medication.setBefore_bp(beforeBp);
-        medication.setAfter_bp(afterBp);
+    public void addMedication(Medication medication){
         medicationRepository.save(medication);
     }
 

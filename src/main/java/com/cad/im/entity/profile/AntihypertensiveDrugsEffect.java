@@ -17,5 +17,6 @@ public class AntihypertensiveDrugsEffect {
     private String anti_drug_before_blood_pressure; // 服用前血压值
     private String anti_drug_after_blood_pressure; // 服用后血压值
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

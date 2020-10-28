@@ -16,91 +16,91 @@ public class ProfileController {
     ProfileService profileService;
 
     @GetMapping("/ade/list")
-    public Result adeList(Integer userId){
+    public Result adeList(String userId){
         List<AntihypertensiveDrugsEffect> adeList = profileService.adeList(userId);
         return Result.success(adeList);
     }
 
     @GetMapping("/basicInformation/list")
-    public Result bIList(Integer userId){
+    public Result bIList(String userId){
         BasicInformation basicInformation = profileService.bIList(userId);
         return Result.success(basicInformation);
     }
 
     @GetMapping("/chiefComplaint/list")
-    public Result cCList(Integer userId){
+    public Result cCList(String userId){
         ChiefComplaint chiefComplaint = profileService.cCList(userId);
         return Result.success(chiefComplaint);
     }
 
     @GetMapping("/fhh/list")
-    public Result fhhList(Integer userId){
+    public Result fhhList(String userId){
         List<FamilyHaveHypertension> fhhList = profileService.fhhList(userId);
         return Result.success(fhhList);
     }
 
     @GetMapping("/gsa/list")
-    public Result gsaList(Integer userId){
+    public Result gsaList(String userId){
         GeneralSituationAssessment generalSituationAssessment = profileService.gsaList(userId);
         return Result.success(generalSituationAssessment);
     }
 
     @GetMapping("/ihs/list")
-    public Result ihsList(Integer userId){
+    public Result ihsList(String userId){
         List<IncentiveHaveSymptom> ihsList = profileService.ihsList(userId);
         return Result.success(ihsList);
     }
 
     @GetMapping("/incentiveOfHypertension/list")
-    public Result iOHList(Integer userId){
+    public Result iOHList(String userId){
         IncentiveOfHypertension incentiveOfHypertension = profileService.iOHList(userId);
         return Result.success(incentiveOfHypertension);
     }
 
     @GetMapping("/lifeHabits/list")
-    public Result lHList(Integer userId){
+    public Result lHList(String userId){
         LifeHabits lifeHabits = profileService.lHList(userId);
         return Result.success(lifeHabits);
     }
 
     @GetMapping("/mscd/list")
-    public Result mscdList(Integer userId){
+    public Result mscdList(String userId){
         MetabolicSyndromeCardiovascularDisease mscd = profileService.mscdList(userId);
         return Result.success(mscd);
     }
 
     @GetMapping("/pFH/list")
-    public Result pFHList(Integer userId){
+    public Result pFHList(String userId){
         PersonalFamilyHistory pfh = profileService.pFHList(userId);
         return Result.success(pfh);
     }
 
     @GetMapping("/physicalExamination/list")
-    public Result pEList(Integer userId){
+    public Result pEList(String userId){
         PhysicalExamination physicalExamination = profileService.pEList(userId);
         return  Result.success(physicalExamination);
     }
 
     @GetMapping("/previousBloodPressureMeasurement/list")
-    public Result pBPMList(Integer userId){
+    public Result pBPMList(String userId){
         PreviousBloodPressureMeasurement previousBloodPressureMeasurement = profileService.pBPMList(userId);
         return Result.success(previousBloodPressureMeasurement);
     }
 
     @GetMapping("/secondaryHypertension/list")
-    public Result sHList(Integer userId){
+    public Result sHList(String userId){
         SecondaryHypertension secondaryHypertension = profileService.sHList(userId);
         return Result.success(secondaryHypertension);
     }
 
     @GetMapping("/tocda/list")
-    public Result tocdaList(Integer userId){
+    public Result tocdaList(String userId){
         TargetOrganCardiovascularDiseaseAssessment tocda = profileService.tocdaList(userId);
         return Result.success(tocda);
     }
 
     @GetMapping("/ths/list")
-    public Result thsList(Integer userId){
+    public Result thsList(String userId){
         return Result.success(profileService.thsList(userId));
     }
 
@@ -202,22 +202,22 @@ public class ProfileController {
     }
 
     @GetMapping("/ade/delAll")
-    public Result adeDelAll(Integer userId){
+    public Result adeDelAll(String userId){
         return profileService.delAllByType(userId, 0);
     }
 
     @GetMapping("/fhh/delAll")
-    public Result fhhDelAll(Integer userId){
+    public Result fhhDelAll(String userId){
         return profileService.delAllByType(userId, 1);
     }
 
     @GetMapping("/ihs/delAll")
-    public Result ihsDelAll(Integer userId){
+    public Result ihsDelAll(String userId){
         return profileService.delAllByType(userId, 2);
     }
 
     @GetMapping("/ths/delAll")
-    public Result thsDelAll(Integer userId){
+    public Result thsDelAll(String userId){
         return profileService.delAllByType(userId, 3);
     }
 }

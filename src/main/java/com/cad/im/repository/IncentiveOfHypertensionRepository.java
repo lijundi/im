@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IncentiveOfHypertensionRepository extends JpaRepository<IncentiveOfHypertension, Integer> {
-    public List<IncentiveOfHypertension> findByUserId(Integer userId);
+    public List<IncentiveOfHypertension> findByUserId(String userId);
 }

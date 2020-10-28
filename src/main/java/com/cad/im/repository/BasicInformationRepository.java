@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface BasicInformationRepository extends JpaRepository<BasicInformation, Integer> {
 
-    public List<BasicInformation> findByUserId(Integer userId);
+    public List<BasicInformation> findByUserId(String userId);
 }

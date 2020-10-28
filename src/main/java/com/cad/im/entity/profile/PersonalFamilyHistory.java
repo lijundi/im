@@ -19,5 +19,6 @@ public class PersonalFamilyHistory {
     @Column(length = 10)
     private String snoring_night; // 有、无 夜间打鼾
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

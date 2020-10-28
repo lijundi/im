@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface IncentiveHaveSymptomRepository extends JpaRepository<IncentiveHaveSymptom, Integer> {
-    public List<IncentiveHaveSymptom> findByUserId(Integer userId);
+    public List<IncentiveHaveSymptom> findByUserId(String userId);
 
     @Transactional
-    public void deleteByUserId(Integer userId);
+    public void deleteByUserId(String userId);
 }

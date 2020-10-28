@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MetabolicSyndromeCardiovascularDiseaseRepository extends JpaRepository<MetabolicSyndromeCardiovascularDisease, Integer> {
-    public List<MetabolicSyndromeCardiovascularDisease> findByUserId(Integer userId);
+    public List<MetabolicSyndromeCardiovascularDisease> findByUserId(String userId);
 }

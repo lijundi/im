@@ -12,7 +12,9 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 50)
     private String fromId;
+    @Column(length = 50)
     private String toId;
     @Column(length = 50)
     private String type; //text,image

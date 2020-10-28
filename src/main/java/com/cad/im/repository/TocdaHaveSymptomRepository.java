@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface TocdaHaveSymptomRepository extends JpaRepository<TocdaHaveSymptom, Integer> {
 
-    public List<TocdaHaveSymptom> findByUserId(Integer userId);
+    public List<TocdaHaveSymptom> findByUserId(String userId);
 
     @Transactional
-    public void deleteByUserId(Integer userId);
+    public void deleteByUserId(String userId);
 }

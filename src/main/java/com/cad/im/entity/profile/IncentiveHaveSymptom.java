@@ -2,10 +2,7 @@ package com.cad.im.entity.profile;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -19,5 +16,6 @@ public class IncentiveHaveSymptom {
     private String dis_degree; // 程度
     private String incentive_process_detail; // 若为""表示无处理
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

@@ -20,15 +20,17 @@ public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_id;
+    @Column(length = 50)
+    private String userId;
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date create_time;
-    private String medicine_name;
-    private String start_time;
-    private String end_time;
+    private Date createTime;
+    private String medicineName;
+    private String startTime;
+    private String endTime;
     private String frequency;
-    private String medicine_dose;
-    private String before_bp;
-    private String after_bp;
+    private String medicineDose;
+    private String beforeBp;
+    private String afterBp;
+
 }

@@ -2,10 +2,7 @@ package com.cad.im.entity.profile;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -18,5 +15,6 @@ public class IncentiveOfHypertension {
     private String incentive_reason; // 原因
     private String incentive_location; // 地点
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

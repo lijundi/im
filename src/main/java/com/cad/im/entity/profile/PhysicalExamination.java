@@ -19,6 +19,7 @@ public class PhysicalExamination {
     @Column(length = 10)
     private String edema_both_lower_limbs; // 有、无 双下肢浮肿
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 
 }

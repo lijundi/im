@@ -17,5 +17,6 @@ public class TargetOrganCardiovascularDiseaseAssessment {
     private Integer tocda_night_urine_num; // 睡着后夜尿次数
     private Integer tocda_day_urine_num; // 白天一般尿次数
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

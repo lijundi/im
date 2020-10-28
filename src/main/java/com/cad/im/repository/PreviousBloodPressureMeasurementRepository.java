@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PreviousBloodPressureMeasurementRepository extends JpaRepository<PreviousBloodPressureMeasurement, Integer> {
-    public List<PreviousBloodPressureMeasurement> findByUserId(Integer userId);
+    public List<PreviousBloodPressureMeasurement> findByUserId(String userId);
 }

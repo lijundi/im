@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PersonalFamilyHistoryRepository extends JpaRepository<PersonalFamilyHistory, Integer> {
-    public List<PersonalFamilyHistory> findByUserId(Integer userId);
+    public List<PersonalFamilyHistory> findByUserId(String userId);
 }

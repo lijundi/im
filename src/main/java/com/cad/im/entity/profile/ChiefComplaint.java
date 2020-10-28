@@ -14,7 +14,8 @@ public class ChiefComplaint {
 
     private Integer hypertensionYear; // 高血压患病年数
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 //    @OneToOne(targetEntity = User.class,
 //            cascade = {},
 //            fetch = FetchType.LAZY)

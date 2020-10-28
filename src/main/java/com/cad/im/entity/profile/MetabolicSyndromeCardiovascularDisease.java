@@ -24,5 +24,6 @@ public class MetabolicSyndromeCardiovascularDisease {
     @Column(length = 10)
     private String retinopathy; // 有、无 视网膜病变
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

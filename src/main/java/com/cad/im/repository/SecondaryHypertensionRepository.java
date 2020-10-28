@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SecondaryHypertensionRepository extends JpaRepository<SecondaryHypertension, Integer> {
-    public List<SecondaryHypertension> findByUserId(Integer userId);
+    public List<SecondaryHypertension> findByUserId(String userId);
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TargetOrganCardiovascularDiseaseAssessmentRepository extends JpaRepository<TargetOrganCardiovascularDiseaseAssessment, Integer> {
-    public List<TargetOrganCardiovascularDiseaseAssessment> findByUserId(Integer userId);
+    public List<TargetOrganCardiovascularDiseaseAssessment> findByUserId(String userId);
 }

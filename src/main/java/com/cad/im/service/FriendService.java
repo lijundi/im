@@ -20,10 +20,10 @@ public class FriendService {
     UserRepository userRepository;
 
     public List<User> getFriends(String identity){
-        return userRepository.getByIdentity(identity);
+        return userRepository.findByIdentity(identity);
     }
 
     public User getUserInfo(String userId){
-        return userRepository.getUserInfo(userId);
+        return userRepository.findByUserId(userId).get(0);
     }
 }

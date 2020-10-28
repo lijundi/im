@@ -12,12 +12,15 @@ import java.util.Base64;
 @Entity
 public class User {
     @Id
+    @Column(length = 50)
     private String userId; // 主键，微信openId
     private String nickName; // 用户昵称
     private String avatarUrl; // 头像
+    @Column(length = 50)
     private String identity; // 身份--'patient','doctor'
     // 微信登录
 //    private String openId;
+    @Column(length = 50)
     private String session;
 
     public User(){}

@@ -18,5 +18,6 @@ public class GeneralSituationAssessment {
     @Column(length = 20)
     private String sleep_quality; // 好、一般、差 睡眠质量
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

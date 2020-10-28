@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ChiefComplaintRepository extends JpaRepository<ChiefComplaint, Integer> {
 
-    public List<ChiefComplaint> findByUserId(Integer userId);
+    public List<ChiefComplaint> findByUserId(String userId);
 }

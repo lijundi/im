@@ -22,5 +22,6 @@ public class SecondaryHypertension {
     private Integer secondary_hypt_night_urine_num; // 睡着后夜尿次数
     private Integer secondary_hypt_day_urine_num; // 白天一般尿次数
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

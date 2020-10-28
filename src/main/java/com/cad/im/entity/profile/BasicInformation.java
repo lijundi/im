@@ -19,7 +19,8 @@ public class BasicInformation {
     private String gender; // 性别
     private String occupation; // 职业
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 
     public BasicInformation(){}
 }

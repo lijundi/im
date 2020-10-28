@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface AntihypertensiveDrugsEffectRepository extends JpaRepository<AntihypertensiveDrugsEffect, Integer> {
 
-    public List<AntihypertensiveDrugsEffect> findByUserId(Integer userId);
+    public List<AntihypertensiveDrugsEffect> findByUserId(String userId);
 
     @Transactional
-    public void deleteByUserId(Integer userId);
+    public void deleteByUserId(String userId);
 }

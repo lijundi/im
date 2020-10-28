@@ -34,9 +34,9 @@ public class FriendController {
            List res = new ArrayList();
            for (User friend : friends){
                Map map = new HashMap();
-               map.put("userId", friend.getUser_id());
-               map.put("nickName", friend.getNick_name());
-               map.put("avatarUrl", friend.getAvatar_url());
+               map.put("userId", friend.getUserId());
+               map.put("nickName", friend.getNickName());
+               map.put("avatarUrl", friend.getAvatarUrl());
                res.add(map);
            }
             JSONObject jsonObject = new JSONObject();
@@ -52,9 +52,9 @@ public class FriendController {
         try{
             User friend = friendService.getUserInfo(friendId);
             Map map = new HashMap();
-            map.put("userId", friend.getUser_id());
-            map.put("nickName", friend.getNick_name());
-            map.put("avatarUrl", friend.getAvatar_url());
+            map.put("userId", friend.getUserId());
+            map.put("nickName", friend.getNickName());
+            map.put("avatarUrl", friend.getAvatarUrl());
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("data", map);
             return Result.success(jsonObject);

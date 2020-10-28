@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface GeneralSituationAssessmentRepository extends JpaRepository<GeneralSituationAssessment, Integer> {
-    public List<GeneralSituationAssessment> findByUserId(Integer userId);
+    public List<GeneralSituationAssessment> findByUserId(String userId);
 }

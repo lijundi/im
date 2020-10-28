@@ -22,5 +22,6 @@ public class LifeHabits {
     @Column(length = 10)
     private String life_stay_up_late; // 有、无 经常熬夜
 
-    private Integer userId;
+    @Column(length = 50)
+    private String userId;
 }

@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface FamilyHaveHypertensionRepository extends JpaRepository<FamilyHaveHypertension, Integer> {
-    public List<FamilyHaveHypertension> findByUserId(Integer userId);
+    public List<FamilyHaveHypertension> findByUserId(String userId);
 
     @Transactional
-    public void deleteByUserId(Integer userId);
+    public void deleteByUserId(String userId);
 }

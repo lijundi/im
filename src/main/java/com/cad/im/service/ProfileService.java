@@ -45,7 +45,7 @@ public class ProfileService {
     @Autowired
     UserRepository userRepository;
 
-    public List<AntihypertensiveDrugsEffect> adeList(Integer userId) {
+    public List<AntihypertensiveDrugsEffect> adeList(String userId) {
         List<AntihypertensiveDrugsEffect> aDEList = antihypertensiveDrugsEffectRepository.findByUserId(userId);
         if(aDEList.size()!=0) {
             return aDEList;
@@ -54,7 +54,7 @@ public class ProfileService {
         }
     }
 
-    public BasicInformation bIList(Integer userId) {
+    public BasicInformation bIList(String userId) {
         List<BasicInformation> bIList = basicInformationRepository.findByUserId(userId);
         if(bIList.size()!=0) {
             return bIList.get(0);
@@ -63,7 +63,7 @@ public class ProfileService {
         }
     }
 
-    public ChiefComplaint cCList(Integer userId) {
+    public ChiefComplaint cCList(String userId) {
         List<ChiefComplaint> cCList = chiefComplaintRepository.findByUserId(userId);
         if(cCList.size()!=0) {
             return cCList.get(0);
@@ -72,7 +72,7 @@ public class ProfileService {
         }
     }
 
-    public List<FamilyHaveHypertension> fhhList(Integer userId) {
+    public List<FamilyHaveHypertension> fhhList(String userId) {
         List<FamilyHaveHypertension> tmpList = familyHaveHypertensionRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList;
@@ -81,7 +81,7 @@ public class ProfileService {
         }
     }
 
-    public GeneralSituationAssessment gsaList(Integer userId) {
+    public GeneralSituationAssessment gsaList(String userId) {
         List<GeneralSituationAssessment> gSAList = generalSituationAssessmentRepository.findByUserId(userId);
         if(gSAList.size()!=0) {
             return gSAList.get(0);
@@ -90,7 +90,7 @@ public class ProfileService {
         }
     }
 
-    public List<IncentiveHaveSymptom> ihsList(Integer userId) {
+    public List<IncentiveHaveSymptom> ihsList(String userId) {
         List<IncentiveHaveSymptom> tmpList = incentiveHaveSymptomRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList;
@@ -99,7 +99,7 @@ public class ProfileService {
         }
     }
 
-    public IncentiveOfHypertension iOHList(Integer userId) {
+    public IncentiveOfHypertension iOHList(String userId) {
         List<IncentiveOfHypertension> tmpList = incentiveOfHypertensionRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -108,7 +108,7 @@ public class ProfileService {
         }
     }
 
-    public LifeHabits lHList(Integer userId) {
+    public LifeHabits lHList(String userId) {
         List<LifeHabits> tmpList = lifeHabitsRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -117,7 +117,7 @@ public class ProfileService {
         }
     }
 
-    public MetabolicSyndromeCardiovascularDisease mscdList(Integer userId) {
+    public MetabolicSyndromeCardiovascularDisease mscdList(String userId) {
         List<MetabolicSyndromeCardiovascularDisease> tmpList = metabolicSyndromeCardiovascularDiseaseRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -126,7 +126,7 @@ public class ProfileService {
         }
     }
 
-    public PersonalFamilyHistory pFHList(Integer userId) {
+    public PersonalFamilyHistory pFHList(String userId) {
         List<PersonalFamilyHistory> tmpList = personalFamilyHistoryRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -135,7 +135,7 @@ public class ProfileService {
         }
     }
 
-    public PhysicalExamination pEList(Integer userId) {
+    public PhysicalExamination pEList(String userId) {
         List<PhysicalExamination> tmpList = physicalExaminationRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -144,7 +144,7 @@ public class ProfileService {
         }
     }
 
-    public PreviousBloodPressureMeasurement pBPMList(Integer userId) {
+    public PreviousBloodPressureMeasurement pBPMList(String userId) {
         List<PreviousBloodPressureMeasurement> tmpList = previousBloodPressureMeasurementRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -153,7 +153,7 @@ public class ProfileService {
         }
     }
 
-    public SecondaryHypertension sHList(Integer userId) {
+    public SecondaryHypertension sHList(String userId) {
         List<SecondaryHypertension> tmpList = secondaryHypertensionRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -162,7 +162,7 @@ public class ProfileService {
         }
     }
 
-    public TargetOrganCardiovascularDiseaseAssessment tocdaList(Integer userId) {
+    public TargetOrganCardiovascularDiseaseAssessment tocdaList(String userId) {
         List<TargetOrganCardiovascularDiseaseAssessment> tmpList = targetOrganCardiovascularDiseaseAssessmentRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList.get(0);
@@ -171,7 +171,7 @@ public class ProfileService {
         }
     }
 
-    public List<TocdaHaveSymptom> thsList(Integer userId) {
+    public List<TocdaHaveSymptom> thsList(String userId) {
         List<TocdaHaveSymptom> tmpList = tocdaHaveSymptomRepository.findByUserId(userId);
         if(tmpList.size()!=0) {
             return tmpList;
@@ -446,7 +446,7 @@ public class ProfileService {
         }
     }
 
-    public Result delAllByType(Integer userId, Integer type){
+    public Result delAllByType(String userId, Integer type){
         try{
             switch (type){
                 case 0 :

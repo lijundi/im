@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PhysicalExaminationRepository  extends JpaRepository<PhysicalExamination, Integer> {
-    public List<PhysicalExamination> findByUserId(Integer userId);
+    public List<PhysicalExamination> findByUserId(String userId);
 }
