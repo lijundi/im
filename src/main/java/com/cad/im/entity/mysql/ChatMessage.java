@@ -1,5 +1,6 @@
 package com.cad.im.entity.mysql;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,13 +13,15 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer fromId;
-    private Integer toId;
+    private String fromId;
+    private String toId;
     @Column(length = 50)
     private String type; //text,image
     private String content;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp;
+
     private Boolean offline; // 离线消息标记
 
     public ChatMessage(){}

@@ -31,7 +31,7 @@ public class MyHandShakeInterceptor implements HandshakeInterceptor {
                                    Map<String, Object> attributes) throws Exception {
         // 存在即登录成功
         String userId = ((ServletServerHttpRequest) request).getServletRequest().getParameter("userId");
-        return userService.isUserExist(Integer.parseInt(userId));
+        return userService.isUserExist(userId);
     }
 
     @Override

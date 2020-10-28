@@ -1,6 +1,9 @@
 package com.cad.im.entity.websocket;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author lijundi
@@ -8,19 +11,19 @@ import lombok.Data;
  */
 @Data
 public class WsChatMessage {
-    private Integer message_id;
-    private Integer from_id;
-    private Integer to_id;
+    private String fromId;
+    private String toId;
     private String type;
     private String content;
-    private String timeStamp;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date timeStamp;
 
     public WsChatMessage(){}
 
-    public WsChatMessage(Integer message_id, Integer from_id, Integer to_id, String type, String content, String timeStamp){
-        this.message_id = message_id;
-        this.from_id = from_id;
-        this.to_id = to_id;
+    public WsChatMessage(String fromId, String toId, String type, String content, Date timeStamp){
+        this.fromId = fromId;
+        this.toId = toId;
         this.type = type;
         this.content = content;
         this.timeStamp = timeStamp;

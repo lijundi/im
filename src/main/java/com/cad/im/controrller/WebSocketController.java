@@ -10,6 +10,8 @@ import com.cad.im.service.UserService;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
 import com.cad.im.websocket.MyHandShakeInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,12 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
 @RestController
 public class WebSocketController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     @Autowired
     SessionHandler sessionHandler;
     @Autowired
@@ -40,16 +44,14 @@ public class WebSocketController {
     @SendToUser("topic/result")
     public Result chat(@RequestBody WsChatMessage wsChatMessage) {
         try {
-            if (!userService.isUserExist(wsChatMessage.getTo_id())) // 接收方id不存在
-                throw new Exception();
+            if (!userService.isUserExist(wsChatMessage.getToId())) // 接收方id不存在
+                throw new Exception("接收方Id不存在");
             chatService.storeChatMessage(wsChatMessage);
-            if (sessionHandler.isOnline(String.valueOf(wsChatMessage.getTo_id())))
+            if (sessionHandler.isOnline(wsChatMessage.getToId()))
                 chatService.forwardMessage(wsChatMessage);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("message_id", wsChatMessage.getMessage_id());
-            return Result.success(jsonObject);
+            return Result.success();
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            LOGGER.error(ex.toString());
             return Result.failure(ResultCode.FAILURE);
         }
     }
@@ -58,11 +60,11 @@ public class WebSocketController {
     @SendToUser("topic/result")
     public Result robotChat(@RequestBody WsChatMessage wsChatMessage) {
         try {
-            JSONObject[] msgObjects = robotService.sendMsgToRobot(wsChatMessage.getFrom_id(), wsChatMessage.getContent());
+            JSONObject[] msgObjects = robotService.sendMsgToRobot(wsChatMessage.getFromId(), wsChatMessage.getContent());
             if(msgObjects!=null){
                 for (JSONObject msgObject : msgObjects) {
-                    WsChatMessage wsChatMsg = new WsChatMessage(wsChatMessage.getMessage_id() + 1, 1,
-                            wsChatMessage.getFrom_id(), "text", msgObject.getString("text"), "");
+                    WsChatMessage wsChatMsg = new WsChatMessage("1",
+                            wsChatMessage.getFromId(), "text", msgObject.getString("text"), new Date());
                     JSONObject message = new JSONObject();
                     message.put("wsChatMessage", wsChatMsg);
                     // 多选消息 or  表单消息
@@ -75,15 +77,13 @@ public class WebSocketController {
                             message.put("buttons", buttons);
                         }
                     }
-                    chatService.forwardRobotMessage(message, wsChatMessage.getFrom_id());
+                    chatService.forwardRobotMessage(message, wsChatMessage.getFromId());
                 }
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("message_id", wsChatMessage.getMessage_id());
-                return Result.success(jsonObject);
+                return Result.success();
             }
             return Result.failure(ResultCode.FAILURE);
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            LOGGER.error(ex.toString());
             return Result.failure(ResultCode.FAILURE);
         }
     }
