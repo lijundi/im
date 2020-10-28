@@ -10,8 +10,9 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-    @Query(value = "select * from user where nick_name = ?1", nativeQuery = true)
     public List<User> findByNickName(String nickName);
+
+    public List<User> findByUserId(String userId);
 
     @Query(value = "select * from user where ident = ?1", nativeQuery = true)
     public List<User> getByIdentity(String identity);

@@ -23,7 +23,7 @@ public class RobotService {
     public JSONObject sendRestartToRobot(String sender){
 //        String url = "http://10.108.211.136:5005/conversations/" + String.valueOf(sender) + "/tracker/events";
 //        String url = "http://127.0.0.1:5005/conversations/" + String.valueOf(sender) + "/tracker/events";
-        String url = "http://114.67.200.39:10201/conversations/" + String.valueOf(sender) + "/tracker/events";
+        String url = "http://114.67.200.39:10201/conversations/" + sender + "/tracker/events";
         JSONObject jo = new JSONObject();
         jo.put("event", "restart");
         ResponseEntity<JSONObject> responseEntity = postJsonObject(url, jo.toJSONString());
