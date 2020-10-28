@@ -31,6 +31,7 @@ public class FriendController {
     public Result getFriends(String identity){
         try{
            List<User> friends =  friendService.getFriends(identity);
+           friends.get(0).getUserId();
            List res = new ArrayList();
            for (User friend : friends){
                Map map = new HashMap();

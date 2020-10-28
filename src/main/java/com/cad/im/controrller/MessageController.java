@@ -29,44 +29,22 @@ public class MessageController {
     MessageService messageService;
 
     //获取离线消息
-//    @GetMapping("/offline")
-//    public Result getMessages(String userId) {
-//        try {
-//            List<ChatMessage> chatMessages = messageService.getMessages(userId);
-//            List res = new ArrayList();
-//            for (ChatMessage chatMessage : chatMessages) {
-//                Map map = new HashMap();
-//                map.put("fromId", chatMessage.getFromId());
-//                map.put("toId", chatMessage.getToId());
-//                map.put("type", chatMessage.getType());
-//                map.put("content", chatMessage.getContent());
-//                map.put("timeStamp", chatMessage.getTimeStamp());
-//                res.add(map);
-//            }
-//            return Result.success(res);
-//        } catch (Exception ex) {
-//            return Result.failure(ResultCode.FAILURE, ex.toString());
-//        }
-//    }
+    @GetMapping("/offline")
+    public Result getMessages(String userId) {
+        try {
+            List<ChatMessage> offlines = messageService.getMessages(userId);
+            return Result.success(offlines);
+        } catch (Exception ex) {
+            return Result.failure(ResultCode.FAILURE, ex.toString());
+        }
+    }
 
     //获取历史消息
     @GetMapping("/history")
     public Result getHistorys(String userId, String friendId, String timeStamp) {
         try {
-            List<ChatMessage> chatMessages = messageService.getHistorys(userId, friendId, timeStamp);
-            List res = new ArrayList();
-            for (ChatMessage chatMessage : chatMessages) {
-                Map map = new HashMap();
-                map.put("fromId", chatMessage.getFromId());
-                map.put("toId", chatMessage.getToId());
-                map.put("type", chatMessage.getType());
-                map.put("content", chatMessage.getContent());
-                map.put("timeStamp", chatMessage.getTimeStamp());
-                res.add(map);
-            }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("data", res);
-            return Result.success(jsonObject);
+            List<ChatMessage> historys = messageService.getHistorys(userId, friendId, timeStamp);
+            return Result.success(historys);
         } catch (Exception ex) {
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }

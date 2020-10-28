@@ -22,9 +22,9 @@ public class MessageService {
     @Autowired
     ChatMessageRepository chatMessageRepository;
 
-//    public List<ChatMessage> getMessages(String userId){
-//        return chatMessageRepository.getMessages(userId, friendId);
-//    }
+    public List<ChatMessage> getMessages(String userId){
+        return chatMessageRepository.getOfflines(userId);
+    }
 
     public List<ChatMessage> getHistorys(String userId, String friendId, String timeStamp) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

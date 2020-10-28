@@ -23,7 +23,7 @@ public class MedicationService {
     MedicationRepository medicationRepository;
 
     public List<Medication> getHistorys(String userId){
-        return medicationRepository.getHistorys(userId);
+        return medicationRepository.findByUserId(userId);
     }
 
     public void addMedication(Medication medication){
@@ -31,6 +31,6 @@ public class MedicationService {
     }
 
     public void delMedication(Integer id){
-        medicationRepository.delMedication(id);
+        medicationRepository.deleteById(id);
     }
 }

@@ -10,10 +10,8 @@ import java.util.List;
 
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Integer> {
-    @Query(value = "select * from medication where user_id = ?1", nativeQuery = true)
-    public List<Medication> getHistorys(String userId);
+    public List<Medication> findByUserId(String userId);
 
-    @Modifying
-    @Query(value = "delete from medication where id = ?1", nativeQuery = true)
-    public void delMedication(Integer id);
+    @Override
+    public void deleteById(Integer id);
 }
