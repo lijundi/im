@@ -31,7 +31,6 @@ public class MedicationController {
     public Result getList(String userId) {
         try {
             List<Medication> medications = medicationService.getHistorys(userId);
-            System.out.println(medications.size());
             return Result.success(medications);
         } catch (Exception ex) {
             return Result.failure(ResultCode.FAILURE, ex.toString());
@@ -42,7 +41,6 @@ public class MedicationController {
     @PostMapping("/add")
     public Result addMedication(@RequestBody Medication medication) {
         try {
-            System.out.println(medication.getUserId());
             medicationService.addMedication(medication);
             return Result.success(ResultCode.SUCCESS);
         } catch (Exception ex) {
