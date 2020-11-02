@@ -6,10 +6,7 @@ import com.cad.im.service.MedicationService;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +38,9 @@ public class MedicationController {
     }
 
     //添加用药记录
-    @GetMapping("/add")
+    @PostMapping("/add")
     public Result addMedication(@RequestBody Medication medication) {
         try {
-            System.out.println(medication.getUserId());
             medicationService.addMedication(medication);
             return Result.success(ResultCode.SUCCESS);
         } catch (Exception ex) {
