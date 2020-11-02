@@ -29,7 +29,7 @@ import java.util.Objects;
 
 @RestController
 public class WebSocketController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
     @Autowired
     SessionHandler sessionHandler;
     @Autowired

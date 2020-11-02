@@ -20,6 +20,10 @@ public class FriendService {
     UserRepository userRepository;
 
     public List<User> getFriends(String identity){
+        if(identity.equals("patient"))
+            identity = "doctor";
+        else
+            identity = "patient";
         return userRepository.findByIdentity(identity);
     }
 

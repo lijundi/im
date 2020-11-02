@@ -16,13 +16,13 @@
 
 #### 返回参数
 
-| 字段名    | 类型  | 描述               |
-| :-------- | :---- | ------------------ |
-| fromId    | int   | 发送方id           |
-| toId      | int   | 接收方id           |
-| type      | tring | 消息类型 text=文本 |
-| content   | tring | 消息内容           |
-| timeStamp | tring | 发送消息的时间戳   |
+| 字段名    | 类型   | 描述               |
+| :-------- | :----- | ------------------ |
+| fromId    | string | 发送方id           |
+| toId      | string | 接收方id           |
+| type      | string | 消息类型 text=文本 |
+| content   | string | 消息内容           |
+| timeStamp | string | 发送消息的时间戳   |
 
 
 
@@ -113,17 +113,17 @@
 
 #### URL
 
-> /user/topic/chat
+> /user/app/chat
 
 #### 请求参数
 
 | 参数名    | 类型   | 是否必填 | 描述               |
 | :-------- | :----- | -------- | ------------------ |
-| fromId    | int    | 是       | 发送方id           |
-| toId      | int    | 是       | 接收方id           |
-| type      | String | 是       | 消息类型 text=文本 |
-| content   | String | 是       | 消息内容           |
-| timeStamp | String | 是       | 发送消息的时间戳   |
+| fromId    | string | 是       | 发送方id           |
+| toId      | string | 是       | 接收方id           |
+| type      | string | 是       | 消息类型 text=文本 |
+| content   | string | 是       | 消息内容           |
+| timeStamp | string | 是       | 发送消息的时间戳   |
 
 #### 返回参数
 
@@ -165,17 +165,17 @@
 
 #### URL
 
-> /user/topic/robotChat
+> /user/app/robotChat
 
 #### 请求参数
 
 | 参数名    | 类型   | 是否必填 | 描述               |
 | :-------- | :----- | -------- | ------------------ |
-| fromId    | int    | 是       | 发送方id           |
-| toId      | int    | 是       | 接收方id           |
-| type      | String | 是       | 消息类型 text=文本 |
-| content   | String | 是       | 消息内容           |
-| timeStamp | String | 是       | 发送消息的时间戳   |
+| fromId    | string | 是       | 发送方id           |
+| toId      | string | 是       | 接收方id           |
+| type      | string | 是       | 消息类型 text=文本 |
+| content   | string | 是       | 消息内容           |
+| timeStamp | string | 是       | 发送消息的时间戳   |
 
 #### 返回参数
 
@@ -213,4 +213,4 @@
 
 ------
 
-修改时间：2020.10.22
+修改时间：2020.10.29

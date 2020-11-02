@@ -37,7 +37,7 @@ public class UserService {
             throw new Exception("微信接口出错");
         }
         String openId = loginJo.getString("openid");
-//        LOGGER.info(openId + "---" + loginInfo.getNickName() +" login!");
+        LOGGER.info(openId + "---" + loginInfo.getNickName() +" login!");
         // 检查是否为第一次登录
         List<User> userList = userRepository.findByUserId(openId);
         User user;
@@ -52,4 +52,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void changeIdentity(String identity, String userId){
+        User user = userRepository.findByUserId(userId).get(0);
+        user.setIdentity(identity);
+        userRepository.save(user);
+    }
 }

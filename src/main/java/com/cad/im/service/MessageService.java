@@ -23,7 +23,13 @@ public class MessageService {
     ChatMessageRepository chatMessageRepository;
 
     public List<ChatMessage> getMessages(String userId){
-        return chatMessageRepository.getOfflines(userId);
+        List<ChatMessage> chatMessageList = chatMessageRepository.getOfflines(userId);
+        // 修改离线消息标志位
+        for(ChatMessage chatMessage: chatMessageList){
+            chatMessage.setOffline(false);
+            chatMessageRepository.save(chatMessage);
+        }
+        return chatMessageList;
     }
 
     public List<ChatMessage> getHistorys(String userId, String friendId, String timeStamp) throws ParseException {
