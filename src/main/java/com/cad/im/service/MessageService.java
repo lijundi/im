@@ -33,7 +33,7 @@ public class MessageService {
     }
 
     public List<ChatMessage> getHistorys(String userId, String friendId, String timeStamp) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(timeStamp);
         return chatMessageRepository.getHistorys(userId, friendId, date);
     }
