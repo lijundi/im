@@ -1,5 +1,6 @@
 package com.cad.im.entity.mysql;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class ChatMessage {
     private String type; //text,image
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timeStamp;
     private Boolean offline; // 离线消息标记
 
