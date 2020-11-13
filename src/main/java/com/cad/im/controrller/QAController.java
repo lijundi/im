@@ -26,7 +26,7 @@ public class QAController {
     }
 
     //获取QA答案
-    @PostMapping("/answer")
+    @GetMapping("/answer")
     public Result getAnswer(@RequestBody JSONObject jsonObject) {
         return qaService.getAnswer(jsonObject.toString());
     }
