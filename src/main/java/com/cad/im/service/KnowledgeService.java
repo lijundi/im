@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * @Description: QA问答
  */
 @Service
-public class QAService {
-    String url = "http://114.67.200.39:7662/qaai/";
+public class KnowledgeService {
+    private String url = "http://114.67.200.39:7662/qaai/";
 
     public Result getQAList(String requestJson) {
         String tranurl = url + "predict";
@@ -24,13 +24,4 @@ public class QAService {
         return Result.success(HttpUtil.postJson(tranurl, requestJson));
     }
 
-    public Result addQA(String requestJson) {
-        String tranurl = url + "adddata";
-        return Result.success(HttpUtil.postJson(tranurl, requestJson));
-    }
-
-    public Result deleteQA(String requestJson) {
-        String tranurl = url + "deldata";
-        return Result.success(HttpUtil.postJson(tranurl, requestJson));
-    }
 }
