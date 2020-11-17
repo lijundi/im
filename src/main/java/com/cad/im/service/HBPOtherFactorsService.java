@@ -48,7 +48,7 @@ public class HBPOtherFactorsService {
     public Result getList(String userId){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("bpLevel", bpLevelRepository.findById(userId));
-        jsonObject.put("clinicalComplications", bpLevelRepository.findById(userId));
+        jsonObject.put("clinicalComplications", clinicalComplicationsRepository.findById(userId));
         jsonObject.put("riskFactors", riskFactorsRepository.findById(userId));
         jsonObject.put("targetOrganDamage", targetOrganDamageRepository.findById(userId));
         return Result.success(jsonObject);

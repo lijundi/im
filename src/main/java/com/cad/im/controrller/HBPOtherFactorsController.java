@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/supplyinfo")
+@RequestMapping("/hbpinfo")
 public class HBPOtherFactorsController {
     @Autowired
     HBPOtherFactorsService hbpOtherFactorsService;

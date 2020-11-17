@@ -553,22 +553,28 @@
 
 ```json
 {
-    "code":1,
-    "msg":"成功",
-    "data":[
-        {
-            "qid": "1603074677241",
-            "content": "高血压的分类"
-        },
-        {
-            "qid": "1603074721687",
-            "content": "继发性高血压分类"
-        },
-        {
-            "qid": "1603074676060",
-            "content": "高血压是什么"
-        }
-    ]
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "data": [
+            {
+                "qid": "1603074677241",
+                "content": "高血压的分类"
+            },
+            {
+                "qid": "1603074721687",
+                "content": "继发性高血压分类"
+            },
+            {
+                "qid": "1603074828467",
+                "content": "居家高血压自我管理"
+            },
+            {
+                "qid": "1603074676060",
+                "content": "高血压是什么"
+            }
+        ]
+    }
 }
 ```
 
@@ -604,10 +610,10 @@
 
 ```json
 {
-    "code":1,
-    "msg":"成功",
-    "data":{
-        "answer":"高血压有两种类型，一是原发性高血压，二是继发性高血压。原发性高血压是一种以血压升高为主要临床表现但病因尚未明确的独立疾病，占所有高血压患者的90%以上。继发性高血压又称为症状性高血压，病因明确，是某种疾病的临床表现之一，血压可暂时性或持久性升高。"
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "answer": "高血压有两种类型，一是原发性高血压，二是继发性高血压。原发性高血压是一种以血压升高为主要临床表现但病因尚未明确的独立疾病，占所有高血压患者的90%以上。继发性高血压又称为症状性高血压，病因明确，是某种疾病的临床表现之一，血压可暂时性或持久性升高。"
     }
 }
 ```
@@ -677,8 +683,274 @@
 
 
 
+## 9 高血压其他影响因素
+
+### 9.1 添加高血压其他影响因素
+
+#### 接口描述
+
+> 添加高血压其他影响因素，也可用来更新高血压其他影响因素
+
+#### URL
+
+> /hbpinfo/addfactors
+
+#### 请求方式
+
+> POST，数据为json格式
+
+##### 示例：
+
+```json
+{
+    "riskFactors": {
+        "userId": "1",
+        "gender": "女",
+        "age": 19,
+        "smoke": "不吸烟",
+        "igt": "未知",
+        "h2Bg": 10.0,
+        "fasting_bg": 20.0,
+        "dyslipidemia": "未知",
+        "family_history": "否",
+        "abdominal_obesity": "否",
+        "waistline": 60.0,
+        "bmi": 20.0,
+        "cysteine": 10.0,
+        "rf_num": 0
+    },
+    "bpLevel": {
+        "userId": "1",
+        "updateTime": "2020-11-17T02:53:19.000+0000",
+        "sbp": 90,
+        "dbp": 90,
+        "bp_level": "正常"
+    },
+    "clinicalComplications": {
+        "userId": "1",
+        "cvd": "否",
+        "chd": "否",
+        "ckd": "未知",
+        "pvd": "否",
+        "retionpathy": "未知",
+        "diabetes": "未知"
+    },
+    "targetOrganDamage": {
+        "userId": "1",
+        "left_ventricular": "未知",
+        "usca": "否",
+        "dgfr": "否",
+        "isc": "否",
+        "microalbuminuria": "未知"
+    }
+}
+```
+
+
+
+#### 请求参数
+
+##### riskFactors（危险因素）
+
+| 字段名            | 类型    | 描述                           |
+| ----------------- | ------- | ------------------------------ |
+| userId            | varchar | 主键，对应用户ID               |
+| gender            | varchar | 性别：男/女                    |
+| age               | int     | 年龄                           |
+| smoke             | varchar | 吸烟情况：吸烟/被动吸烟/不吸烟 |
+| igt               | varchar | 糖耐量受损：是/否/未知         |
+| h2Bg              | float   | 2h血糖含量                     |
+| fasting_bg        | float   | 空腹血糖含量                   |
+| dyslipidemia      | varchar | 血脂异常：是/否/未知           |
+| family_history    | varchar | 早发心血管病家族史：是/否/未知 |
+| abdominal_obesity | varchar | 腹型肥胖：是/否/未知           |
+| waist             | float   | 腰围（cm）                     |
+| bmi               | float   | BMI（kg/m2)                    |
+| cysteine          | float   | 半胱氨酸含量                   |
+| rf_num            | integer | 危险因素数量                   |
+
+##### bpLevel（血压分级）
+
+| 字段名     | 类型     | 描述                                                         |
+| ---------- | -------- | ------------------------------------------------------------ |
+| userId     | varchar  | 主键，对应用户ID                                             |
+| updateTime | datetime | 更新时间                                                     |
+| sbp        | int      | 收缩压                                                       |
+| dbp        | int      | 舒张压                                                       |
+| bp_level   | varchar  | 血压水平分类：正常/正常高值/1级高血压 /2级高血压/3级高血压/单纯收缩期高血压 |
+
+##### clinicalComplications（临床并发症）
+
+| 字段名      | 类型    | 描述                     |
+| ----------- | ------- | ------------------------ |
+| userId      | varchar | 主键，对应用户ID         |
+| cvd         | varchar | 脑血管疾病：是/否/未知   |
+| chd         | varchar | 心脏疾病：是/否/未知     |
+| ckd         | varchar | 肾脏疾病：是/否/未知     |
+| pvd         | varchar | 外周血管疾病：是/否/未知 |
+| retionpathy | varchar | 视网膜病变：是/否/未知   |
+| diabetes    | varchar | 糖尿病：有/无/未知       |
+
+##### targetOrganDamage（靶器官损害）
+
+| 字段名           | 类型    | 描述                               |
+| ---------------- | ------- | ---------------------------------- |
+| userId           | varchar | 主键，对应用户ID                   |
+| left_ventricular | varchar | 左心室肥厚：是/否/未知             |
+| usca             | varchar | 超声显示颈动脉粥样硬化：是/否/未知 |
+| dgfr             | varchar | 肾小球滤过率降低：是/否/未知       |
+| isc              | varchar | 血清肌酐升高：是/否/未知           |
+| microalbuminuria | varchar | 微量白蛋白尿：是/否/未知           |
+
+
+
+#### 返回参数
+
+| 字段名 | 类型 | 描述                   |
+| ------ | ---- | ---------------------- |
+| -      | json | 添加完成后返回成功提示 |
+
+##### 示例
+
+```json
+{
+    "code": 1,
+    "msg": "成功",
+    "data": null
+}
+```
+
+### 9.2 获取高血压其他影响因素
+
+#### 接口描述
+
+> 获取高血压其他影响因素列表
+
+#### URL
+
+> /hbpinfo/getlist
+
+#### 请求方式
+
+> GET
+
+#### 请求参数
+
+| 参数   | 类型   | 是否必填 | 描述   |
+| ------ | ------ | -------- | ------ |
+| userId | string | 是       | 用户Id |
+
+#### 返回参数
+
+##### riskFactors（危险因素）
+
+| 字段名            | 类型    | 描述                           |
+| ----------------- | ------- | ------------------------------ |
+| userId            | varchar | 主键，对应用户ID               |
+| gender            | varchar | 性别：男/女                    |
+| age               | int     | 年龄                           |
+| smoke             | varchar | 吸烟情况：吸烟/被动吸烟/不吸烟 |
+| igt               | varchar | 糖耐量受损：是/否/未知         |
+| h2Bg              | float   | 2h血糖含量                     |
+| fasting_bg        | float   | 空腹血糖含量                   |
+| dyslipidemia      | varchar | 血脂异常：是/否/未知           |
+| family_history    | varchar | 早发心血管病家族史：是/否/未知 |
+| abdominal_obesity | varchar | 腹型肥胖：是/否/未知           |
+| waist             | float   | 腰围（cm）                     |
+| bmi               | float   | BMI（kg/m2)                    |
+| cysteine          | float   | 半胱氨酸含量                   |
+| rf_num            | integer | 危险因素数量                   |
+
+##### bpLevel（血压分级）
+
+| 字段名     | 类型     | 描述                                                         |
+| ---------- | -------- | ------------------------------------------------------------ |
+| userId     | varchar  | 主键，对应用户ID                                             |
+| updateTime | datetime | 更新时间                                                     |
+| sbp        | int      | 收缩压                                                       |
+| dbp        | int      | 舒张压                                                       |
+| bp_level   | varchar  | 血压水平分类：正常/正常高值/1级高血压 /2级高血压/3级高血压/单纯收缩期高血压 |
+
+##### clinicalComplications（临床并发症）
+
+| 字段名      | 类型    | 描述                     |
+| ----------- | ------- | ------------------------ |
+| userId      | varchar | 主键，对应用户ID         |
+| cvd         | varchar | 脑血管疾病：是/否/未知   |
+| chd         | varchar | 心脏疾病：是/否/未知     |
+| ckd         | varchar | 肾脏疾病：是/否/未知     |
+| pvd         | varchar | 外周血管疾病：是/否/未知 |
+| retionpathy | varchar | 视网膜病变：是/否/未知   |
+| diabetes    | varchar | 糖尿病：有/无/未知       |
+
+##### targetOrganDamage（靶器官损害）
+
+| 字段名           | 类型    | 描述                               |
+| ---------------- | ------- | ---------------------------------- |
+| userId           | varchar | 主键，对应用户ID                   |
+| left_ventricular | varchar | 左心室肥厚：是/否/未知             |
+| usca             | varchar | 超声显示颈动脉粥样硬化：是/否/未知 |
+| dgfr             | varchar | 肾小球滤过率降低：是/否/未知       |
+| isc              | varchar | 血清肌酐升高：是/否/未知           |
+| microalbuminuria | varchar | 微量白蛋白尿：是/否/未知           |
+
+
+
+##### 示例
+
+```json
+{
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "riskFactors": {
+            "userId": "1",
+            "gender": "女",
+            "age": 19,
+            "smoke": "不吸烟",
+            "igt": "未知",
+            "h2Bg": 10.0,
+            "fasting_bg": 20.0,
+            "dyslipidemia": "未知",
+            "family_history": "否",
+            "abdominal_obesity": "否",
+            "waistline": 60.0,
+            "bmi": 20.0,
+            "cysteine": 10.0,
+            "rf_num": 0
+        },
+        "bpLevel": {
+            "userId": "1",
+            "updateTime": "2020-11-17T02:53:19.000+0000",
+            "sbp": 90,
+            "dbp": 90,
+            "bp_level": "正常"
+        },
+        "clinicalComplications": {
+            "userId": "1",
+            "cvd": "否",
+            "chd": "否",
+            "ckd": "未知",
+            "pvd": "否",
+            "retionpathy": "未知",
+            "diabetes": "未知"
+        },
+        "targetOrganDamage": {
+            "userId": "1",
+            "left_ventricular": "未知",
+            "usca": "否",
+            "dgfr": "否",
+            "isc": "否",
+            "microalbuminuria": "未知"
+        }
+    }
+}
+```
+
+
+
 
 
 ------
 
-修改时间：2020.11.14
+修改时间：2020.11.17
