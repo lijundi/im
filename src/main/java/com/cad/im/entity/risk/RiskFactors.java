@@ -33,8 +33,25 @@ public class RiskFactors {
     private String family_history; // 早发心血管病家族史--是/否/未知
     @Column(length = 10)
     private String abdominal_obesity; // 腹型肥胖--是/否/未知
-    private Float waist; // 腰围
+    private Float waistline; // 腰围
     private Float bmi; // BMI
     private Float cysteine; // 半胱氨酸含量
     private Integer rf_num; // 危险因素数量
+
+    public RiskFactors(String userId){
+        this.userId = userId;
+        this.gender = null;
+        this.age = null;
+        this.smoke = "不吸烟";
+        this.igt = "未知";
+        this.h2Bg = null;
+        this.fasting_bg = null;
+        this.dyslipidemia = "未知";
+        this.family_history = "未知";
+        this.abdominal_obesity = "未知";
+        this.waistline = null;
+        this.bmi = null;
+        this.cysteine = null;
+        this.rf_num = 0;
+    }
 }

@@ -13,9 +13,9 @@ public class PhysicalExamination {
 
     private String blood_pressure; // 血压值
     private Integer heart_rate; // 心率
-    private Integer height; // 身高
-    private Integer weight; // 体重
-    private Integer waistline; // 腰围
+    private Float height; // 身高
+    private Float weight; // 体重
+    private Float waistline; // 腰围
     @Column(length = 10)
     private String edema_both_lower_limbs; // 有、无 双下肢浮肿
 

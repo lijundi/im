@@ -27,4 +27,10 @@ public class BpLevel {
     @Column(length = 50)
     private String bp_level; // 血压水平分类--正常/正常高值/1级高血压/2级高血压/3级高血压/单纯收缩期高血压
 
+    public BpLevel(String userId){
+        this.userId = userId;
+        this.sbp = null;
+        this.dbp = null;
+        this.bp_level = "正常";
+    }
 }
