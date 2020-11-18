@@ -29,4 +29,14 @@ public class ClinicalComplications {
     private String retionpathy; // 视网膜病变--是/否/未知
     @Column(length = 10)
     private String diabetes; // 糖尿病--有/无/未知
+
+    public ClinicalComplications(String userId){
+        this.userId = userId;
+        this.cvd = "未知";
+        this.chd = "未知";
+        this.ckd = "未知";
+        this.pvd = "未知";
+        this.retionpathy = "未知";
+        this.diabetes = "未知";
+    }
 }

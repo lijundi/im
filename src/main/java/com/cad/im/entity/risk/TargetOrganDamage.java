@@ -27,4 +27,13 @@ public class TargetOrganDamage {
     private String isc; // 血清肌酐升高--是/否/未知
     @Column(length = 10)
     private String microalbuminuria; // 微量白蛋白尿--是/否/未知
+
+    public TargetOrganDamage(String userId){
+        this.userId = userId;
+        this.left_ventricular = "未知";
+        this.usca = "未知";
+        this.dgfr = "未知";
+        this.isc = "未知";
+        this.microalbuminuria = "未知";
+    }
 }
