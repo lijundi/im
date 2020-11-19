@@ -31,17 +31,15 @@ public class FriendController {
     public Result getFriends(String identity){
         try{
            List<User> friends =  friendService.getFriends(identity);
-           List res = new ArrayList();
+           List<JSONObject> friendList = new ArrayList<>();
            for (User friend : friends){
-               Map map = new HashMap();
-               map.put("userId", friend.getUserId());
-               map.put("nickName", friend.getNickName());
-               map.put("avatarUrl", friend.getAvatarUrl());
-               res.add(map);
+               JSONObject jsonObject = new JSONObject();
+               jsonObject.put("userId", friend.getUserId());
+               jsonObject.put("nickName", friend.getNickName());
+               jsonObject.put("avatarUrl", friend.getAvatarUrl());
+               friendList.add(jsonObject);
            }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("data", res);
-            return Result.success(jsonObject);
+            return Result.success(friendList);
         } catch (Exception ex){
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }
@@ -51,12 +49,10 @@ public class FriendController {
     public Result getUserInfo(String friendId){
         try{
             User friend = friendService.getUserInfo(friendId);
-            Map map = new HashMap();
-            map.put("userId", friend.getUserId());
-            map.put("nickName", friend.getNickName());
-            map.put("avatarUrl", friend.getAvatarUrl());
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("data", map);
+            jsonObject.put("userId", friend.getUserId());
+            jsonObject.put("nickName", friend.getNickName());
+            jsonObject.put("avatarUrl", friend.getAvatarUrl());
             return Result.success(jsonObject);
         } catch (Exception ex){
             return Result.failure(ResultCode.FAILURE, ex.toString());

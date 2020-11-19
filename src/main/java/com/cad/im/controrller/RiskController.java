@@ -29,7 +29,19 @@ public class RiskController {
     public Result assessment(String userId){
         try{
             riskService.updateRisk(userId);
-            JSONObject jo = riskService.assessment(userId);
+            riskService.assessment(userId);
+            JSONObject jo = riskService.result(userId);
+            return Result.success(jo);
+        } catch (Exception ex){
+            LOGGER.error(ex.toString());
+            return Result.failure(ResultCode.FAILURE, ex.toString());
+        }
+    }
+
+    @GetMapping("/result")
+    public Result amResult(String userId){
+        try{
+            JSONObject jo = riskService.result(userId);
             return Result.success(jo);
         } catch (Exception ex){
             LOGGER.error(ex.toString());
