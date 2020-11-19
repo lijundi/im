@@ -365,15 +365,16 @@
 
 #### 请求参数
 
-| 参数         | 类型   |      | 描述           |
-| ------------ | ------ | ---- | -------------- |
-| medicineName | string | 是   | 药物名称       |
-| startTime    | string | 是   | 服用开始时间   |
-| endTime      | string | 是   | 服用结束时间   |
-| frequency    | string | 是   | 每日服用次数   |
-| medicineDose | string | 是   | 每次服用剂量mg |
-| beforeBp     | string | 是   | 服用前血压值   |
-| afterBp      | string | 是   | 服用后血压值   |
+| 参数         | 类型   | 是否必填 | 描述           |
+| ------------ | ------ | -------- | -------------- |
+| userId       | string | 是       | 用户id         |
+| medicineName | string | 是       | 药物名称       |
+| startTime    | string | 是       | 服用开始时间   |
+| endTime      | string | 是       | 服用结束时间   |
+| frequency    | string | 是       | 每日服用次数   |
+| medicineDose | string | 是       | 每次服用剂量mg |
+| beforeBp     | string | 是       | 服用前血压值   |
+| afterBp      | string | 是       | 服用后血压值   |
 
 #### 返回参数
 
@@ -516,7 +517,7 @@
 
 ## 7 知识问答
 
-### 7.1 获取问题列表
+### 7.1 问题列表
 
 #### 接口描述
 
@@ -697,7 +698,7 @@
 
 
 
-### 8.2 获取评估结果
+### 8.2 评估结果
 
 #### 接口描述
 
@@ -723,74 +724,21 @@
 
 
 
-## 9 高血压其他影响因素
-
-### 9.1 添加高血压其他影响因素
+### 8.3 补充评估条件
 
 #### 接口描述
 
-> 添加高血压其他影响因素，也可用来更新高血压其他影响因素
+> 用户完善高血压风险等级评估条件
 
 #### URL
 
-> /hbpinfo/addfactors
+> /risk/add
 
 #### 请求方式
 
 > POST，数据为json格式
 
-##### 示例：
-
-```json
-{
-    "riskFactors": {
-        "userId": "1",
-        "gender": "女",
-        "age": 19,
-        "smoke": "不吸烟",
-        "igt": "未知",
-        "h2Bg": 10.0,
-        "fasting_bg": 20.0,
-        "dyslipidemia": "未知",
-        "family_history": "否",
-        "abdominal_obesity": "否",
-        "waistline": 60.0,
-        "bmi": 20.0,
-        "cysteine": 10.0,
-        "rf_num": 0
-    },
-    "bpLevel": {
-        "userId": "1",
-        "updateTime": "2020-11-17T02:53:19.000+0000",
-        "sbp": 90,
-        "dbp": 90,
-        "bp_level": "正常"
-    },
-    "clinicalComplications": {
-        "userId": "1",
-        "cvd": "否",
-        "chd": "否",
-        "ckd": "未知",
-        "pvd": "否",
-        "retionpathy": "未知",
-        "diabetes": "未知"
-    },
-    "targetOrganDamage": {
-        "userId": "1",
-        "left_ventricular": "未知",
-        "usca": "否",
-        "dgfr": "否",
-        "isc": "否",
-        "microalbuminuria": "未知"
-    }
-}
-```
-
-
-
 #### 请求参数
-
-##### riskFactors（危险因素）
 
 | 字段名            | 类型    | 描述                           |
 | ----------------- | ------- | ------------------------------ |
@@ -842,33 +790,21 @@
 | isc              | varchar | 血清肌酐升高：是/否/未知           |
 | microalbuminuria | varchar | 微量白蛋白尿：是/否/未知           |
 
-
-
 #### 返回参数
 
-| 字段名 | 类型 | 描述                   |
-| ------ | ---- | ---------------------- |
-| -      | json | 添加完成后返回成功提示 |
+> 无
 
-##### 示例
 
-```json
-{
-    "code": 1,
-    "msg": "成功",
-    "data": null
-}
-```
 
-### 9.2 获取高血压其他影响因素
+### 8.4 评估条件
 
 #### 接口描述
 
-> 获取高血压其他影响因素列表
+> 获取高血压风险等级评估条件列表
 
 #### URL
 
-> /hbpinfo/getlist
+> /risk/list
 
 #### 请求方式
 

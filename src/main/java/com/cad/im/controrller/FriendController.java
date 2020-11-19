@@ -39,7 +39,7 @@ public class FriendController {
                jsonObject.put("avatarUrl", friend.getAvatarUrl());
                friendList.add(jsonObject);
            }
-            return Result.success(friendList);
+           return Result.success(friendList);
         } catch (Exception ex){
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }
