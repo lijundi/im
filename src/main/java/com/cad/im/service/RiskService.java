@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.profile.*;
 import com.cad.im.entity.risk.*;
 import com.cad.im.repository.*;
+import com.cad.im.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -424,5 +425,14 @@ public class RiskService {
     // 去除数组中的否
     private void removeFou(ArrayList<String> arrayList){
         arrayList.removeIf(temp -> temp.equals("否"));
+    }
+
+    public Result  addAssessmentCondition(AssessmentCondition assessmentCondition){
+        assessmentConditionRepository.save(assessmentCondition);
+        return Result.success();
+    }
+
+    public Result getAssessmentCondition(String userId){
+        return Result.success(assessmentConditionRepository.findById(userId));
     }
 }

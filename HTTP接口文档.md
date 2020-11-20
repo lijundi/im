@@ -740,55 +740,36 @@
 
 #### 请求参数
 
-| 字段名            | 类型    | 描述                           |
-| ----------------- | ------- | ------------------------------ |
-| userId            | varchar | 主键，对应用户ID               |
-| gender            | varchar | 性别：男/女                    |
-| age               | int     | 年龄                           |
-| smoke             | varchar | 吸烟情况：吸烟/被动吸烟/不吸烟 |
-| igt               | varchar | 糖耐量受损：是/否/未知         |
-| h2Bg              | float   | 2h血糖含量                     |
-| fasting_bg        | float   | 空腹血糖含量                   |
-| dyslipidemia      | varchar | 血脂异常：是/否/未知           |
-| family_history    | varchar | 早发心血管病家族史：是/否/未知 |
-| abdominal_obesity | varchar | 腹型肥胖：是/否/未知           |
-| waist             | float   | 腰围（cm）                     |
-| bmi               | float   | BMI（kg/m2)                    |
-| cysteine          | float   | 半胱氨酸含量                   |
-| rf_num            | integer | 危险因素数量                   |
-
-##### bpLevel（血压分级）
-
-| 字段名     | 类型     | 描述                                                         |
-| ---------- | -------- | ------------------------------------------------------------ |
-| userId     | varchar  | 主键，对应用户ID                                             |
-| updateTime | datetime | 更新时间                                                     |
-| sbp        | int      | 收缩压                                                       |
-| dbp        | int      | 舒张压                                                       |
-| bp_level   | varchar  | 血压水平分类：正常/正常高值/1级高血压 /2级高血压/3级高血压/单纯收缩期高血压 |
-
-##### clinicalComplications（临床并发症）
-
-| 字段名      | 类型    | 描述                     |
-| ----------- | ------- | ------------------------ |
-| userId      | varchar | 主键，对应用户ID         |
-| cvd         | varchar | 脑血管疾病：是/否/未知   |
-| chd         | varchar | 心脏疾病：是/否/未知     |
-| ckd         | varchar | 肾脏疾病：是/否/未知     |
-| pvd         | varchar | 外周血管疾病：是/否/未知 |
-| retionpathy | varchar | 视网膜病变：是/否/未知   |
-| diabetes    | varchar | 糖尿病：有/无/未知       |
-
-##### targetOrganDamage（靶器官损害）
-
-| 字段名           | 类型    | 描述                               |
-| ---------------- | ------- | ---------------------------------- |
-| userId           | varchar | 主键，对应用户ID                   |
-| left_ventricular | varchar | 左心室肥厚：是/否/未知             |
-| usca             | varchar | 超声显示颈动脉粥样硬化：是/否/未知 |
-| dgfr             | varchar | 肾小球滤过率降低：是/否/未知       |
-| isc              | varchar | 血清肌酐升高：是/否/未知           |
-| microalbuminuria | varchar | 微量白蛋白尿：是/否/未知           |
+| 字段名             | 类型    | 描述 |                                  |
+| ------------------ | ------- | ---- | -------------------------------- |
+| userId             | varchar | 是   | 主键，对应用户ID                 |
+| sbp                | int     | 否   | 收缩压（mmHg）                   |
+| dbp                | int     | 否   | 舒张压（mmHg）                   |
+| gender             | varchar | 否   | 性别：男/女                      |
+| age                | int     | 否   | 年龄                             |
+| smoke              | varchar | 否   | 吸烟情况：吸烟/被动吸烟/不吸烟   |
+| h2_bg              | float   | 否   | 2h血糖含量（mmol/L）             |
+| fasting_bg         | float   | 否   | 空腹血糖含量（mmol/L）           |
+| dyslipidemia       | varchar | 否   | 血脂异常：是/否                  |
+| tc                 | float   | 否   | 总胆固醇含量（mmol/L）           |
+| ldl_c              | float   | 否   | 低密度脂蛋白胆固醇含量（mmol/L） |
+| hdl_c              | float   | 否   | 高密度脂蛋白胆固醇含量（mmol/L） |
+| cvd_family_history | varchar | 否   | 早发心血管病家族史：是/否        |
+| waistline          | float   | 否   | 腰围（cm）                       |
+| bmi                | float   | 否   | BMI（kg/m2)                      |
+| cysteine           | float   | 否   | 半胱氨酸含量（umol/L）           |
+| sl_voltage         | float   | 否   | 心电图Sokolow-Lyon电压（mV）     |
+| lvmi               | float   | 否   | 左心室重量指数（g/m2）           |
+| imt                | float   | 否   | 颈动脉内膜中层厚度（mm）         |
+| egfr               | float   | 否   | 肾小球滤过率（ml·min-1·1.73m-2） |
+| serum_creatinine   | float   | 否   | 血清肌酐（umol/L）               |
+| proteinuria        | float   | 否   | 蛋白尿（mg/24h）                 |
+| cvd                | varchar | 否   | 脑血管疾病：是/否                |
+| chd                | varchar | 否   | 心脏疾病：是/否                  |
+| ckd                | varchar | 否   | 肾脏疾病：是/否                  |
+| pvd                | varchar | 否   | 外周血管疾病：是/否              |
+| retionpathy        | varchar | 否   | 视网膜病变：是/否                |
+| diabetes           | varchar | 否   | 糖尿病：是/否                    |
 
 #### 返回参数
 
@@ -818,59 +799,36 @@
 
 #### 返回参数
 
-##### riskFactors（危险因素）
-
-| 字段名            | 类型    | 描述                           |
-| ----------------- | ------- | ------------------------------ |
-| userId            | varchar | 主键，对应用户ID               |
-| gender            | varchar | 性别：男/女                    |
-| age               | int     | 年龄                           |
-| smoke             | varchar | 吸烟情况：吸烟/被动吸烟/不吸烟 |
-| igt               | varchar | 糖耐量受损：是/否/未知         |
-| h2Bg              | float   | 2h血糖含量                     |
-| fasting_bg        | float   | 空腹血糖含量                   |
-| dyslipidemia      | varchar | 血脂异常：是/否/未知           |
-| family_history    | varchar | 早发心血管病家族史：是/否/未知 |
-| abdominal_obesity | varchar | 腹型肥胖：是/否/未知           |
-| waist             | float   | 腰围（cm）                     |
-| bmi               | float   | BMI（kg/m2)                    |
-| cysteine          | float   | 半胱氨酸含量                   |
-| rf_num            | integer | 危险因素数量                   |
-
-##### bpLevel（血压分级）
-
-| 字段名     | 类型     | 描述                                                         |
-| ---------- | -------- | ------------------------------------------------------------ |
-| userId     | varchar  | 主键，对应用户ID                                             |
-| updateTime | datetime | 更新时间                                                     |
-| sbp        | int      | 收缩压                                                       |
-| dbp        | int      | 舒张压                                                       |
-| bp_level   | varchar  | 血压水平分类：正常/正常高值/1级高血压 /2级高血压/3级高血压/单纯收缩期高血压 |
-
-##### clinicalComplications（临床并发症）
-
-| 字段名      | 类型    | 描述                     |
-| ----------- | ------- | ------------------------ |
-| userId      | varchar | 主键，对应用户ID         |
-| cvd         | varchar | 脑血管疾病：是/否/未知   |
-| chd         | varchar | 心脏疾病：是/否/未知     |
-| ckd         | varchar | 肾脏疾病：是/否/未知     |
-| pvd         | varchar | 外周血管疾病：是/否/未知 |
-| retionpathy | varchar | 视网膜病变：是/否/未知   |
-| diabetes    | varchar | 糖尿病：有/无/未知       |
-
-##### targetOrganDamage（靶器官损害）
-
-| 字段名           | 类型    | 描述                               |
-| ---------------- | ------- | ---------------------------------- |
-| userId           | varchar | 主键，对应用户ID                   |
-| left_ventricular | varchar | 左心室肥厚：是/否/未知             |
-| usca             | varchar | 超声显示颈动脉粥样硬化：是/否/未知 |
-| dgfr             | varchar | 肾小球滤过率降低：是/否/未知       |
-| isc              | varchar | 血清肌酐升高：是/否/未知           |
-| microalbuminuria | varchar | 微量白蛋白尿：是/否/未知           |
-
-
+| 字段名             | 类型    | 描述 |                                  |
+| ------------------ | ------- | ---- | -------------------------------- |
+| userId             | varchar | 是   | 主键，对应用户ID                 |
+| sbp                | int     | 否   | 收缩压（mmHg）                   |
+| dbp                | int     | 否   | 舒张压（mmHg）                   |
+| gender             | varchar | 否   | 性别：男/女                      |
+| age                | int     | 否   | 年龄                             |
+| smoke              | varchar | 否   | 吸烟情况：吸烟/被动吸烟/不吸烟   |
+| h2_bg              | float   | 否   | 2h血糖含量（mmol/L）             |
+| fasting_bg         | float   | 否   | 空腹血糖含量（mmol/L）           |
+| dyslipidemia       | varchar | 否   | 血脂异常：是/否                  |
+| tc                 | float   | 否   | 总胆固醇含量（mmol/L）           |
+| ldl_c              | float   | 否   | 低密度脂蛋白胆固醇含量（mmol/L） |
+| hdl_c              | float   | 否   | 高密度脂蛋白胆固醇含量（mmol/L） |
+| cvd_family_history | varchar | 否   | 早发心血管病家族史：是/否        |
+| waistline          | float   | 否   | 腰围（cm）                       |
+| bmi                | float   | 否   | BMI（kg/m2)                      |
+| cysteine           | float   | 否   | 半胱氨酸含量（umol/L）           |
+| sl_voltage         | float   | 否   | 心电图Sokolow-Lyon电压（mV）     |
+| lvmi               | float   | 否   | 左心室重量指数（g/m2）           |
+| imt                | float   | 否   | 颈动脉内膜中层厚度（mm）         |
+| egfr               | float   | 否   | 肾小球滤过率（ml·min-1·1.73m-2） |
+| serum_creatinine   | float   | 否   | 血清肌酐（umol/L）               |
+| proteinuria        | float   | 否   | 蛋白尿（mg/24h）                 |
+| cvd                | varchar | 否   | 脑血管疾病：是/否                |
+| chd                | varchar | 否   | 心脏疾病：是/否                  |
+| ckd                | varchar | 否   | 肾脏疾病：是/否                  |
+| pvd                | varchar | 否   | 外周血管疾病：是/否              |
+| retionpathy        | varchar | 否   | 视网膜病变：是/否                |
+| diabetes           | varchar | 否   | 糖尿病：是/否                    |
 
 ##### 示例
 
@@ -879,46 +837,34 @@
     "code": 1,
     "msg": "成功",
     "data": {
-        "riskFactors": {
-            "userId": "1",
-            "gender": "女",
-            "age": 19,
-            "smoke": "不吸烟",
-            "igt": "未知",
-            "h2Bg": 10.0,
-            "fasting_bg": 20.0,
-            "dyslipidemia": "未知",
-            "family_history": "否",
-            "abdominal_obesity": "否",
-            "waistline": 60.0,
-            "bmi": 20.0,
-            "cysteine": 10.0,
-            "rf_num": 0
-        },
-        "bpLevel": {
-            "userId": "1",
-            "updateTime": "2020-11-17T02:53:19.000+0000",
-            "sbp": 90,
-            "dbp": 90,
-            "bp_level": "正常"
-        },
-        "clinicalComplications": {
-            "userId": "1",
-            "cvd": "否",
-            "chd": "否",
-            "ckd": "未知",
-            "pvd": "否",
-            "retionpathy": "未知",
-            "diabetes": "未知"
-        },
-        "targetOrganDamage": {
-            "userId": "1",
-            "left_ventricular": "未知",
-            "usca": "否",
-            "dgfr": "否",
-            "isc": "否",
-            "microalbuminuria": "未知"
-        }
+        "userId": "o0TDd4kSohtusMWy2fUYHyNI69Uw",
+        "sbp": 100,
+        "dbp": 150,
+        "gender": "男",
+        "age": 55,
+        "smoke": "吸烟",
+        "h2Bg": null,
+        "fasting_bg": null,
+        "dyslipidemia": "否",
+        "tc": null,
+        "ldl_c": null,
+        "hdl_c": null,
+        "cvd_family_history": "否",
+        "waistline": 80.0,
+        "bmi": 22.49,
+        "cysteine": null,
+        "sl_voltage": null,
+        "lvmi": null,
+        "imt": null,
+        "egfr": null,
+        "serum_creatinine": null,
+        "proteinuria": null,
+        "cvd": "否",
+        "chd": "否",
+        "ckd": "否",
+        "pvd": "否",
+        "retionpathy": "否",
+        "diabetes": "是"
     }
 }
 ```

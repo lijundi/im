@@ -1,13 +1,11 @@
 package com.cad.im.controrller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cad.im.entity.risk.AssessmentCondition;
 import com.cad.im.service.RiskService;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,5 +45,16 @@ public class RiskController {
             LOGGER.error(ex.toString());
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }
+    }
+
+    //补充评估条件
+    @PostMapping("/add")
+    public Result addAssessmentCondition(@RequestBody AssessmentCondition assessmentCondition){
+        return riskService.addAssessmentCondition(assessmentCondition);
+    }
+
+    @GetMapping("/list")
+    public Result getAssessmentCondition(String userId){
+        return riskService.getAssessmentCondition(userId);
     }
 }
