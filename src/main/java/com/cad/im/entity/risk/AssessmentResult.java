@@ -69,7 +69,7 @@ public class AssessmentResult {
     private String clinicalComplications; // 临床并发症：是/否
 
     @Column(length = 50)
-    private String riskLevel; // 危险等级：正常/低危/中危/高危/极高危
+    private String riskLevel; // 危险等级：正常/低危/中危/高危/很高危
 
     public AssessmentResult(){}
 

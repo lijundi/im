@@ -402,10 +402,7 @@ public class RiskService {
         if(ac.getWaistline()!=null && (ac.getWaistline()>=90&&ac.getGender().equals("男") || ac.getWaistline()>=85&&ac.getGender().equals("女"))){
             ar.setAbdominal_obesity("腹型肥胖");
             rfNum+=1;
-        } else {
-            ar.setAbdominal_obesity("否");
-        }
-        if(ac.getBmi()!=null && ac.getBmi()>=28){
+        } else if(ac.getBmi()!=null && ac.getBmi()>=28){
             ar.setAbdominal_obesity("腹型肥胖");
             rfNum+=1;
         } else {
