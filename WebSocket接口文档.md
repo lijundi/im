@@ -38,11 +38,12 @@
 
 #### 返回参数
 
-| 字段名        | 类型            | 描述                                |
-| :------------ | :-------------- | ----------------------------------- |
-| wsChatMessage | message         | 回复消息                            |
-| inputs        | string          | 与buttons字段互斥，表示血压值输入框 |
-| buttons       | array of button | 与inputs字段互斥，表示选择项        |
+| 字段名        | 类型            | 描述                                                         |
+| :------------ | :-------------- | ------------------------------------------------------------ |
+| wsChatMessage | message         | 回复消息                                                     |
+| type          | string          | 用户输入类型 text=文本 bp=血压值输入框 num=数字输入框 navigate=页面跳转 buttons=选择项 |
+| buttons       | array of string | 当type=buttons时返回该字段，表示选择项                       |
+|               | string          | 当type=navigate时返回该字段，表示要跳转的页面 medicine=用药管理 risk=风险评估 |
 
 ##### message
 
@@ -54,15 +55,9 @@
 | content   | string | 消息内容           |
 | timeStamp | string | 发送消息的时间戳   |
 
-##### button
-
-| 字段名 | 类型   | 描述       |
-| ------ | ------ | ---------- |
-| title  | string | 选择项的值 |
-
 ##### 示例
 
-- inputs消息
+- 页面跳转消息
 
 ```JSON
 {
@@ -73,7 +68,23 @@
         "content":"hello",
         "timeStamp":"2020-10-10 21:51:57"
     },
-    "inputs":"inputs"
+    "type":"navigate",
+    "navigate":"medicine"
+}
+```
+
+- 数字输入框消息
+
+```JSON
+{
+    "wsChatMessage":{
+        "fromId":"xxx1",
+        "toId":"xxx2",
+        "type":"text",
+        "content":"hello",
+        "timeStamp":"2020-10-10 21:51:57"
+    },
+    "type":"num"
 }
 ```
 
@@ -88,13 +99,10 @@
         "content":"hello",
         "timeStamp":"2020-10-10 21:51:57"
     },
+    "type":"buttons",
     "buttons":[
-        {
-            "title":"1"
-        },
-        {
-            "title":"2"
-        }
+        "主诉",
+        "退出问诊"
     ]
 }
 ```
