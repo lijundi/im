@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.cad.im.bean.Constant;
 import com.cad.im.entity.http.LoginInfo;
 import com.cad.im.entity.mysql.User;
+import com.cad.im.entity.mysql.UserRelation;
+import com.cad.im.repository.UserRelationRepository;
 import com.cad.im.repository.UserRepository;
 import com.cad.im.util.HttpUtil;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final Constant constant;
+    @Autowired
+    UserRelationRepository userRelationRepository;
 
     public UserService(UserRepository userRepository, Constant constant) {
         this.userRepository = userRepository;
@@ -43,12 +47,21 @@ public class UserService {
         User user;
         if(userList.size()==0){
             user = new User(openId, "patient");
+            //每次患者用户创建，就把所有医生用户变为好友
+            List<User> list = userRepository.findByIdentity("doctor");
+            for(User tmp : list){
+                UserRelation userRelation = new UserRelation(openId, tmp.getUserId(), tmp.getNickName(), true);
+                UserRelation friendRelation = new UserRelation(tmp.getUserId(), openId, loginInfo.getNickName(), true);
+                userRelationRepository.save(userRelation);
+                userRelationRepository.save(friendRelation);
+            }
         }else{
             user = userList.get(0);
         }
         user.setNickName(loginInfo.getNickName());
         user.setSession(loginJo.getString("session_key"));
         user.setAvatarUrl(loginInfo.getAvatarUrl());
+
         return userRepository.save(user);
     }
 

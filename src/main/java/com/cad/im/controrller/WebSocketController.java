@@ -2,29 +2,22 @@ package com.cad.im.controrller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cad.im.entity.websocket.FriendMessage;
 import com.cad.im.entity.websocket.WsChatMessage;
-import com.cad.im.service.ChatService;
-import com.cad.im.service.RobotService;
-import com.cad.im.service.SessionHandler;
-import com.cad.im.service.UserService;
+import com.cad.im.service.*;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
-import com.cad.im.websocket.MyHandShakeInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 
 @RestController
@@ -38,6 +31,13 @@ public class WebSocketController {
     UserService userService;
     @Autowired
     RobotService robotService;
+    @Autowired
+    FriendService friendService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    public WebSocketController(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+    }
 
 
     @MessageMapping("/chat")
@@ -45,10 +45,13 @@ public class WebSocketController {
     public Result chat(@RequestBody WsChatMessage wsChatMessage) {
         try {
             if (!userService.isUserExist(wsChatMessage.getToId())) // 接收方id不存在
+            {
                 throw new Exception("接收方Id不存在");
+            }
             chatService.storeChatMessage(wsChatMessage);
-            if (sessionHandler.isOnline(wsChatMessage.getToId()))
+            if (sessionHandler.isOnline(wsChatMessage.getToId())) {
                 chatService.forwardMessage(wsChatMessage);
+            }
             return Result.success();
         } catch (Exception ex) {
             LOGGER.error(ex.toString());
@@ -87,4 +90,34 @@ public class WebSocketController {
             return Result.failure(ResultCode.FAILURE);
         }
     }
+
+//    //同意添加好友
+//    @MessageMapping("/agree/{userId}")
+//    @SendToUser("/friend/apply")
+//    public Result agreeFriend(String userId, String friendId) {
+//        try {
+//            String message = "好友请求已通过";
+//            //点对点通信
+//            simpMessagingTemplate.convertAndSendToUser(friendId, "/friend/apply", message);
+//            return friendService.agreeFriend(userId, friendId);
+//        } catch (Exception ex) {
+//            LOGGER.error(ex.toString());
+//            return Result.failure(ResultCode.FAILURE);
+//        }
+//    }
+//
+//    //申请好友位
+//    @MessageMapping("/apply/{userId}")
+//    @SendToUser("/friend/agree")
+//    public Result applyFriend(@RequestBody FriendMessage friendMessage) {
+//        try {
+//            String message = friendMessage.getFriendName()+"向您发起好友请求";
+//            //点对点通信
+//            simpMessagingTemplate.convertAndSendToUser(friendMessage.getFriendId(), "/friend/agree", message);
+//            return friendService.applyFriend(friendMessage.getUserId(), friendMessage.getFriendId(), friendMessage.getUserName(), friendMessage.getFriendName());
+//        } catch (Exception ex) {
+//            LOGGER.error(ex.toString());
+//            return Result.failure(ResultCode.FAILURE);
+//        }
+//    }
 }
