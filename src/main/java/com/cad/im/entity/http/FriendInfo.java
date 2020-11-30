@@ -1,8 +1,6 @@
-package com.cad.im.entity.mysql;
+package com.cad.im.entity.http;
 
 import lombok.Data;
-
-import java.util.Base64;
 
 /**
  * @Name: com.cad.im.entity.mysql.Friend
@@ -12,17 +10,17 @@ import java.util.Base64;
  */
 
 @Data
-public class Friend {
+public class FriendInfo {
     private String userId;
     private String friendId;
     private String nickName;
     private String avatarUrl;
     private Boolean status;
 
-    public Friend() {
+    public FriendInfo() {
     }
 
-    public Friend(String userId, String friendId, String nickName, String avatarUrl, Boolean status) {
+    public FriendInfo(String userId, String friendId, String nickName, String avatarUrl, Boolean status) {
         this.userId = userId;
         this.friendId = friendId;
         this.nickName = nickName;

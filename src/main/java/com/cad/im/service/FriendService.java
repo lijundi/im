@@ -1,7 +1,7 @@
 package com.cad.im.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cad.im.entity.mysql.Friend;
+import com.cad.im.entity.http.FriendInfo;
 import com.cad.im.entity.mysql.User;
 import com.cad.im.entity.mysql.UserRelation;
 import com.cad.im.repository.UserRelationRepository;
@@ -11,7 +11,6 @@ import com.cad.im.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.*;
 
 /**
@@ -36,18 +35,18 @@ public class FriendService {
         Map map = new HashMap();
         users.remove(0);
         for (User user : users) {
-            Friend friend = new Friend(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+            FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
             map.put(user.getUserId(), friend);
         }
         for (UserRelation userRelation : friends) {
-            Friend friend = (Friend) map.get(userRelation.getFriendId());
+            FriendInfo friend = (FriendInfo) map.get(userRelation.getFriendId());
             friend.setStatus(true);
             map.put(userRelation.getFriendId(), friend);
         }
-        Iterator<Map.Entry<String, Friend>> iter = map.entrySet().iterator();
+        Iterator<Map.Entry<String, FriendInfo>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<String, Friend> entry = iter.next();
-            Friend friend = (Friend) entry.getValue();
+            Map.Entry<String, FriendInfo> entry = iter.next();
+            FriendInfo friend = (FriendInfo) entry.getValue();
             if (friend.getStatus()) {
                 JSONObject friendMap = new JSONObject();
                 friendMap.put("userId", friend.getFriendId());
@@ -85,7 +84,7 @@ public class FriendService {
         }
         for (User user : tempusers) {
             if (!userId.equals(user.getUserId())) {
-                Friend friend = new Friend(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
                 map.put(user.getUserId(), friend);
             }
         }
@@ -95,14 +94,14 @@ public class FriendService {
             }
         }
         for (UserRelation userRelation : tempfriends) {
-            Friend friend = (Friend) map.get(userRelation.getFriendId());
+            FriendInfo friend = (FriendInfo) map.get(userRelation.getFriendId());
             friend.setStatus(true);
             map.put(userRelation.getFriendId(), friend);
         }
-        Iterator<Map.Entry<String, Friend>> iter = map.entrySet().iterator();
+        Iterator<Map.Entry<String, FriendInfo>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<String, Friend> entry = iter.next();
-            Friend friend = entry.getValue();
+            Map.Entry<String, FriendInfo> entry = iter.next();
+            FriendInfo friend = entry.getValue();
             if (friend.getStatus()) {
                 JSONObject friendMap = new JSONObject();
                 friendMap.put("userId", friend.getFriendId());
@@ -131,18 +130,18 @@ public class FriendService {
             users.remove(0);
             Map map = new HashMap();
             for (User user : users) {
-                Friend friend = new Friend(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
                 map.put(user.getUserId(), friend);
             }
             for (UserRelation userRelation : friends) {
-                Friend friend = (Friend) map.get(userRelation.getFriendId());
+                FriendInfo friend = (FriendInfo) map.get(userRelation.getFriendId());
                 friend.setStatus(true);
                 map.put(userRelation.getFriendId(), friend);
             }
-            Iterator<Map.Entry<String, Friend>> iter = map.entrySet().iterator();
+            Iterator<Map.Entry<String, FriendInfo>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
-                Map.Entry<String, Friend> entry = iter.next();
-                Friend friend = (Friend) entry.getValue();
+                Map.Entry<String, FriendInfo> entry = iter.next();
+                FriendInfo friend = (FriendInfo) entry.getValue();
                 if (friend.getStatus()) {
                     Map friendMap = new HashMap();
                     friendMap.put("userId", friend.getFriendId());

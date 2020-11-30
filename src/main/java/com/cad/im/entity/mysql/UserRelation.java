@@ -17,18 +17,18 @@ public class UserRelation {
     private String friendName;
     private Boolean status; // true--成为好友，false--好友请求
 
-    public UserRelation(){
+    public UserRelation() {
 
     }
 
     public UserRelation(String userId, String friendId, String friendName, Boolean status) {
         this.userId = userId;
         this.friendId = friendId;
-        this.friendName = friendName;
+        this.friendName = new String(Base64.getEncoder().encode(friendName.getBytes()));
         this.status = status;
     }
-    public String getFriendName(){
+
+    public String getFriendName() {
         return new String(Base64.getDecoder().decode(this.friendName.getBytes()));
     }
-
 }
