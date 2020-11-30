@@ -32,7 +32,7 @@ public class RiskController {
             return Result.success(jo);
         } catch (Exception ex){
             LOGGER.error(ex.toString());
-            return Result.failure(ResultCode.FAILURE, ex.toString());
+            return Result.failure(ResultCode.FAILURE, ex.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class RiskController {
             return Result.success(jo);
         } catch (Exception ex){
             LOGGER.error(ex.toString());
-            return Result.failure(ResultCode.FAILURE, ex.toString());
+            return Result.failure(ResultCode.FAILURE, ex.getMessage());
         }
     }
 

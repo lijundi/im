@@ -25,7 +25,7 @@ public class AssessmentCondition {
     private Integer age; // 年龄
     @Column(length = 20)
     private String smoke; // 吸烟情况--吸烟/被动吸烟/不吸烟
-    private Float h2Bg; // 2h血糖含量
+    private Float h2_Bg; // 2h血糖含量
     private Float fasting_bg; // 空腹血糖含量
     @Column(length = 50)
     private String dyslipidemia; // 血脂情况：是/否

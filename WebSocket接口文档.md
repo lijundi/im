@@ -43,7 +43,7 @@
 | wsChatMessage | message         | 回复消息                                                     |
 | type          | string          | 用户输入类型 text=文本 bp=血压值输入框 num=数字输入框 navigate=页面跳转 buttons=选择项 |
 | buttons       | array of string | 当type=buttons时返回该字段，表示选择项                       |
-|               | string          | 当type=navigate时返回该字段，表示要跳转的页面 medicine=用药管理 risk=风险评估 |
+| navigate      | string          | 当type=navigate时返回该字段，表示要跳转的页面 medicine=用药管理 risk=风险评估 |
 
 ##### message
 

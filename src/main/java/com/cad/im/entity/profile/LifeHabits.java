@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class LifeHabits {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     private Integer staple_food; // 每餐主食的份量
     @Column(length = 10)
@@ -35,6 +35,4 @@ public class LifeHabits {
     @Column(length = 10)
     private String life_drinking; // 有、无 酗酒
 
-    @Column(length = 50)
-    private String userId;
 }

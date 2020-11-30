@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author lijundi
@@ -32,14 +29,23 @@ public class RiskService {
     private final BasicInformationRepository basicInformationRepository;
     private final LifeHabitsRepository lifeHabitsRepository;
     private final MetabolicSyndromeCardiovascularDiseaseRepository metabolicSyndromeCardiovascularDiseaseRepository;
+    private final static Map<String, Integer> BPLEVEL = new HashMap<String, Integer>() {{
+        put("正常", 0);
+        put("正常高值", 1);
+        put("1级高血压", 2);
+        put("2级高血压", 3);
+        put("3级高血压", 4);
+    }};
+    private final FamilyHaveHypertensionRepository familyHaveHypertensionRepository;
 
-    public RiskService(PhysicalExaminationRepository physicalExaminationRepository, AssessmentConditionRepository assessmentConditionRepository, AssessmentResultRepository assessmentResultRepository, BasicInformationRepository basicInformationRepository, LifeHabitsRepository lifeHabitsRepository, MetabolicSyndromeCardiovascularDiseaseRepository metabolicSyndromeCardiovascularDiseaseRepository) {
+    public RiskService(PhysicalExaminationRepository physicalExaminationRepository, AssessmentConditionRepository assessmentConditionRepository, AssessmentResultRepository assessmentResultRepository, BasicInformationRepository basicInformationRepository, LifeHabitsRepository lifeHabitsRepository, MetabolicSyndromeCardiovascularDiseaseRepository metabolicSyndromeCardiovascularDiseaseRepository, FamilyHaveHypertensionRepository familyHaveHypertensionRepository) {
         this.physicalExaminationRepository = physicalExaminationRepository;
         this.assessmentConditionRepository = assessmentConditionRepository;
         this.assessmentResultRepository = assessmentResultRepository;
         this.basicInformationRepository = basicInformationRepository;
         this.lifeHabitsRepository = lifeHabitsRepository;
         this.metabolicSyndromeCardiovascularDiseaseRepository = metabolicSyndromeCardiovascularDiseaseRepository;
+        this.familyHaveHypertensionRepository = familyHaveHypertensionRepository;
     }
 
     // 更新风险评估表
@@ -55,8 +61,8 @@ public class RiskService {
             Float waistline = pe.getWaistline();
             if(bp!=null){
                 String[] sList = bp.substring(0, bp.length()-4).split("/");
-                ac.setDbp(Integer.valueOf(sList[0]));
-                ac.setSbp(Integer.valueOf(sList[1]));
+                ac.setSbp(Integer.valueOf(sList[0]));
+                ac.setDbp(Integer.valueOf(sList[1]));
             }
             if(height!=null && weight!=null){
                 DecimalFormat df = new DecimalFormat("##.00");
@@ -82,14 +88,23 @@ public class RiskService {
             }
         }
 
-        List<LifeHabits> lhList = lifeHabitsRepository.findByUserId(userId);
-        if(lhList.size()!=0){
-            // 危险因素表
-            String smoke = lhList.get(0).getLife_smoke();
+        LifeHabits lh = lifeHabitsRepository.findById(userId).orElse(null);
+        if(lh!=null){
+            String smoke = lh.getLife_smoke();
             if(smoke.equals("有")){
                 ac.setSmoke("吸烟");
             } else {
                 ac.setSmoke("不吸烟");
+            }
+        }
+
+        List<FamilyHaveHypertension> fhhList = familyHaveHypertensionRepository.findByUserId(userId);
+        List<String> fwList = Arrays.asList("父亲", "母亲", "哥哥", "弟弟", "姐姐", "妹妹");
+        ac.setCvd_family_history("否");
+        for(FamilyHaveHypertension fhh : fhhList){
+            if(fhh.getFamily_hypertension_age()<50 && fwList.contains(fhh.getFamily_who())) {
+                ac.setCvd_family_history("是");
+                break;
             }
         }
 
@@ -144,65 +159,128 @@ public class RiskService {
         if(ac.getDbp()==null || ac.getSbp()==null){
             throw new Exception("缺少血压值");
         }
-        Integer dbp = ac.getDbp();
         Integer sbp = ac.getSbp();
+        Integer dbp = ac.getDbp();
         // 血压分级判断
-        if(dbp<120 && sbp<80){
-            ar.setBpLevel("正常");
-        } else if(dbp>=140 && sbp<90){
+        if(sbp>=140 && dbp<90){
             ar.setBpLevel("单纯收缩期高血压");
-        } else if(dbp>=120&&dbp<=139 || sbp<=89) {
-            ar.setBpLevel("正常高值");
-        } else if(dbp>=140&&dbp<=159 || sbp<=99){
-            ar.setBpLevel("1级高血压");
-        } else if(dbp>=160&&dbp<=179 || sbp<=109){
-            ar.setBpLevel("2级高血压");
         } else {
-            ar.setBpLevel("3级高血压");
-        }
-        boolean cc = isClinicalComplications(ac, ar);
-        boolean tod = isTargetOrganDamage(ac, ar);
-        int rfNum = numRiskFactors(ac, ar);
-        // 危险分级
-        if(dbp<130 || sbp<85){
-            ar.setRiskLevel("正常");
-        } else if(dbp<=139 || sbp<=89){
-            if(cc){
-                ar.setRiskLevel("高危");
-            } else if(tod || rfNum>=3) {
-                ar.setRiskLevel("中危");
-            } else if(rfNum>=1) {
-                ar.setRiskLevel("低危");
-            } else {
-                ar.setRiskLevel("正常");
-            }
-        } else if(dbp<=159 || sbp<=99){
-            if(cc){
-                ar.setRiskLevel("很高危");
-            } else if(tod || rfNum>=3) {
-                ar.setRiskLevel("高危");
-            } else if(rfNum>=1) {
-                ar.setRiskLevel("中危");
-            } else {
-                ar.setRiskLevel("低危");
-            }
-        } else if(dbp<=179 || sbp<=109){
-            if(cc){
-                ar.setRiskLevel("很高危");
-            } else if(tod || rfNum>=3) {
-                ar.setRiskLevel("高危");
+            String sLevel, dLevel;
+            // sbp
+            if(sbp<120){
+                sLevel = "正常";
+            } else if(sbp<=139){
+                sLevel = "正常高值";
+            } else if(sbp<=159){
+                sLevel = "1级高血压";
+            } else if(sbp<=179){
+                sLevel = "2级高血压";
             } else{
-                ar.setRiskLevel("中危");
+                sLevel = "3级高血压";
             }
-        } else {
-            if(cc){
-                ar.setRiskLevel("很高危");
-            } else if(tod || rfNum!=0) {
-                ar.setRiskLevel("很高危");
+            // dbp
+            if(dbp<80){
+                dLevel = "正常";
+            } else if(dbp<=89){
+                dLevel = "正常高值";
+            } else if(dbp<=99){
+                dLevel = "1级高血压";
+            } else if(dbp<=109){
+                dLevel = "2级高血压";
+            } else{
+                dLevel = "3级高血压";
+            }
+            if(BPLEVEL.get(sLevel)>=BPLEVEL.get(dLevel)){
+                ar.setBpLevel(sLevel);
             } else {
-                ar.setRiskLevel("高危");
+                ar.setBpLevel(dLevel);
             }
         }
+        if(ar.getBpLevel().equals("正常")){
+            assessmentResultRepository.save(ar);
+            throw new Exception("血压正常");
+        }
+
+        // 危险分级
+        int sLevel, dLevel, level;
+        if(sbp<130){
+            sLevel = 0;
+        } else if(sbp<=139){
+            sLevel = 1;
+        } else if(sbp<=159){
+            sLevel = 2;
+        } else if(sbp<=179){
+            sLevel = 3;
+        } else {
+            sLevel = 4;
+        }
+        if(dbp<85){
+            dLevel = 0;
+        } else if(dbp<=89){
+            dLevel = 1;
+        } else if(dbp<=99){
+            dLevel = 2;
+        } else if(dbp<=109){
+            dLevel = 3;
+        } else{
+            dLevel = 4;
+        }
+        level = Math.max(sLevel, dLevel);
+        boolean cc = false, tod= false;
+        int rfNum = 0;
+        if(level!=0){
+            cc = isClinicalComplications(ac, ar);
+            tod = isTargetOrganDamage(ac, ar);
+            rfNum = numRiskFactors(ac, ar);
+        }
+        switch (level){
+            case 0:
+                ar.setRiskLevel("正常");
+                assessmentResultRepository.save(ar);
+                throw new Exception("血压正常");
+            case 1:
+                if(cc){
+                    ar.setRiskLevel("高危");
+                } else if(tod || rfNum>=3) {
+                    ar.setRiskLevel("中危");
+                } else if(rfNum>=1) {
+                    ar.setRiskLevel("低危");
+                } else {
+                    ar.setRiskLevel("正常");
+                    throw new Exception("血压正常");
+                }
+                break;
+            case 2:
+                if(cc){
+                    ar.setRiskLevel("很高危");
+                } else if(tod || rfNum>=3) {
+                    ar.setRiskLevel("高危");
+                } else if(rfNum>=1) {
+                    ar.setRiskLevel("中危");
+                } else {
+                    ar.setRiskLevel("低危");
+                }
+                break;
+            case 3:
+                if(cc){
+                    ar.setRiskLevel("很高危");
+                } else if(tod || rfNum>=3) {
+                    ar.setRiskLevel("高危");
+                } else{
+                    ar.setRiskLevel("中危");
+                }
+                break;
+            case 4:
+                if(cc){
+                    ar.setRiskLevel("很高危");
+                } else if(tod || rfNum!=0) {
+                    ar.setRiskLevel("很高危");
+                } else {
+                    ar.setRiskLevel("高危");
+                }
+                break;
+        }
+
         assessmentResultRepository.save(ar);
     }
 
@@ -211,6 +289,8 @@ public class RiskService {
         AssessmentResult ar = assessmentResultRepository.findById(userId).orElse(null);
         if(ar==null){
             throw new Exception("无评估结果");
+        } else if(ar.getRiskLevel().equals("正常") || ar.getBpLevel().equals("正常")){
+            throw new Exception("血压正常");
         } else {
             JSONObject jo = new JSONObject();
             jo.put("riskLevel", ar.getRiskLevel());
@@ -370,7 +450,7 @@ public class RiskService {
         } else {
             ar.setSmoke("否");
         }
-        if(ac.getH2Bg()!=null && ac.getH2Bg()>=7.8&&ac.getH2Bg()<=11.0){
+        if(ac.getH2_Bg()!=null && ac.getH2_Bg()>=7.8&&ac.getH2_Bg()<=11.0){
             ar.setIgt("糖耐量受损");
             rfNum+=1;
         } else {
@@ -430,6 +510,7 @@ public class RiskService {
     }
 
     public Result getAssessmentCondition(String userId){
+        updateRisk(userId);
         return Result.success(assessmentConditionRepository.findById(userId));
     }
 }

@@ -109,12 +109,7 @@ public class ProfileService {
     }
 
     public LifeHabits lHList(String userId) {
-        List<LifeHabits> tmpList = lifeHabitsRepository.findByUserId(userId);
-        if(tmpList.size()!=0) {
-            return tmpList.get(0);
-        } else {
-            return null;
-        }
+        return lifeHabitsRepository.findById(userId).orElse(null);
     }
 
     public MetabolicSyndromeCardiovascularDisease mscdList(String userId) {
@@ -278,17 +273,7 @@ public class ProfileService {
 
     public Result lHAdd(LifeHabits l){
         try{
-            LifeHabits lh = lHList(l.getUserId());
-            if(lh!=null){
-                lh.setLife_salty_food(l.getLife_salty_food());
-                lh.setLife_smoke(l.getLife_smoke());
-                lh.setLife_drinking(l.getLife_drinking());
-                lh.setLife_nervous(l.getLife_nervous());
-                lh.setLife_stay_up_late(l.getLife_stay_up_late());
-                lifeHabitsRepository.save(lh);
-            } else {
-                lifeHabitsRepository.save(l);
-            }
+            lifeHabitsRepository.save(l);
             return Result.success();
         } catch (Exception ex){
             return Result.failure(ResultCode.FAILURE, ex.toString());
