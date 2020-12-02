@@ -70,16 +70,18 @@ public class WebSocketController {
                             wsChatMessage.getFromId(), "text", msgObject.getString("text"), new Date());
                     JSONObject message = new JSONObject();
                     message.put("wsChatMessage", wsChatMsg);
+//                    String type_string = msgObject.getString("type");
                     // 多选消息 or  表单消息
-                    JSONArray buttons = msgObject.getJSONArray("buttons");
-                    if (buttons != null) {
-                        String type = buttons.getJSONObject(0).getString("type");
-                        if(type != null){
-                            message.put("inputs", type);
-                        }else{
-                            message.put("buttons", buttons);
-                        }
-                    }
+//                    JSONArray buttons = msgObject.getJSONArray("buttons");
+//                    if (buttons != null) {
+//                        String type = buttons.getJSONObject(0).getString("type");
+//                        if(type != null){
+//                            message.put("inputs", type);
+//                        }else{
+//                            message.put("buttons", buttons);
+//                        }
+//                    }
+                    message = RobotService.judgeType(message, msgObject);
                     chatService.forwardRobotMessage(message, wsChatMessage.getFromId());
                 }
                 return Result.success();
