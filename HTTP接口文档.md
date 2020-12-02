@@ -175,9 +175,10 @@
 
 #### 返回参数
 
-| 字段名 | 类型            | 描述         |
-| ------ | --------------- | ------------ |
-| -      | array of friend | 返回好友列表 |
+| 字段名      | 类型            | 描述           |
+| ----------- | --------------- | -------------- |
+| non-friends | array of friend | 返回非好友列表 |
+| friends     | array of friend | 返回好友列表   |
 
 ##### friend
 
@@ -236,7 +237,7 @@
 
 #### 请求方式
 
-> POST
+> GET
 
 #### 请求参数
 
@@ -265,7 +266,7 @@
 
 #### 请求方式
 
-> POST
+> GET
 
 #### 请求参数
 
@@ -292,7 +293,7 @@
 
 #### 请求方式
 
-> POST
+> GET
 
 #### 请求参数
 
@@ -304,6 +305,65 @@
 #### 返回参数
 
 > 无
+
+
+
+### 1.7 好友申请列表
+
+#### 接口描述
+
+> 获取未同意的好友申请列表
+
+#### URL
+
+> /friend/nonfriends
+
+#### 请求方式
+
+> GET
+
+#### 请求参数
+
+| 参数名 | 类型   | 是否必填 | 描述   |
+| ------ | ------ | -------- | ------ |
+| userId | string | 是       | 用户id |
+
+#### 返回参数
+
+| 字段名 | 类型            | 描述                     |
+| ------ | --------------- | ------------------------ |
+| -      | array of friend | 返回未同意的好友申请列表 |
+
+##### friend
+
+| 字段名    | 类型   | 描述     |
+| --------- | ------ | -------- |
+| userId    | string | 好友id   |
+| nickName  | string | 好友昵称 |
+| avatarUrl | string | 好友头像 |
+
+##### 示例
+
+```json
+{
+    "code":1,
+    "msg":"成功",
+    "data":[
+        {
+            "userId": "xxxx0",
+            "nickName": "xcx0",
+            "avatarUrl": "../xcx0.jpg"
+        },
+        {
+            "userId": "xxxx0",
+            "nickName": "xcx0",
+            "avatarUrl": "../xcx0.jpg"
+        }
+    ]
+}
+```
+
+
 
 
 
@@ -555,7 +615,118 @@
 
 ## 4 健康档案
 
-> 暂时省略，以后补全
+> 仅部分接口
+
+
+
+### 4.1 生活习惯
+
+#### 接口描述
+
+> 获取关于生活习惯预问诊信息
+
+#### URL
+
+> /profile/lifeHabits/list
+
+#### 请求方式
+
+> GET
+
+#### 请求参数
+
+| 参数   | 类型   | 是否必填 | 描述   |
+| ------ | ------ | -------- | ------ |
+| userId | string | 是       | 用户id |
+
+#### 返回参数
+
+| 字段名              | 类型   | 描述                          |
+| ------------------- | ------ | ----------------------------- |
+| userId              | string | 用户id                        |
+| staple_food         | int    | 每餐主食的份量                |
+| pickles_bean_paste  | string | 喜食咸菜、豆瓣酱等习惯：有/无 |
+| sleep_hour          | int    | 每晚睡眠时间                  |
+| sleep_quality       | string | 睡眠质量：好/一般/差          |
+| life_stay_up_late   | string | 经常熬夜：有/无               |
+| snoring_night       | string | 夜间打鼾：有/无               |
+| life_nervous        | string | 精神紧张：有/无               |
+| week_sports_num     | int    | 每周运动次数                  |
+| life_smoke          | string | 吸烟：有/无                   |
+| smoke_year          | int    | 吸烟年数                      |
+| smoke_num           | int    | 每天吸烟支数                  |
+| high_drink          | string | 饮高度酒：有/无               |
+| high_drink_year     | int    | 饮高度酒年数                  |
+| high_drink_quantity | int    | 每天饮高度酒两数              |
+| life_drinking       | string | 有、无 酗酒：有/无            |
+
+##### 示例
+
+```json
+{
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "userId": "o0TDd4si-9vPiJfI9l1B6Uzb15m8",
+        "staple_food": null,
+        "pickles_bean_paste": null,
+        "sleep_hour": 7,
+        "sleep_quality": "一般",
+        "life_stay_up_late": "无",
+        "snoring_night": null,
+        "life_nervous": "有",
+        "week_sports_num": null,
+        "life_smoke": "有",
+        "smoke_year": 10,
+        "smoke_num": 3,
+        "high_drink": "无",
+        "high_drink_year": null,
+        "high_drink_quantity": null,
+        "life_drinking": "无"
+    }
+}
+```
+
+
+
+### 4.2 修改生活习惯
+
+#### 接口描述
+
+> 修改用户生活习惯预问诊信息
+
+#### URL
+
+> /profile/lifeHabits/add
+
+#### 请求方式
+
+> POST，数据为json格式
+
+#### 请求参数
+
+| 字段名              | 类型   | 是否必填 | 描述                          |
+| ------------------- | ------ | -------- | ----------------------------- |
+| userId              | string | 是       | 用户id                        |
+| staple_food         | int    | 否       | 每餐主食的份量                |
+| pickles_bean_paste  | string | 否       | 喜食咸菜、豆瓣酱等习惯：有/无 |
+| sleep_hour          | int    | 否       | 每晚睡眠时间                  |
+| sleep_quality       | string | 否       | 睡眠质量：好/一般/差          |
+| life_stay_up_late   | string | 否       | 经常熬夜：有/无               |
+| snoring_night       | string | 否       | 夜间打鼾：有/无               |
+| life_nervous        | string | 否       | 精神紧张：有/无               |
+| week_sports_num     | int    | 否       | 每周运动次数                  |
+| life_smoke          | string | 否       | 吸烟：有/无                   |
+| smoke_year          | int    | 否       | 吸烟年数                      |
+| smoke_num           | int    | 否       | 每天吸烟支数                  |
+| high_drink          | string | 否       | 饮高度酒：有/无               |
+| high_drink_year     | int    | 否       | 饮高度酒年数                  |
+| high_drink_quantity | int    | 否       | 每天饮高度酒两数              |
+| life_drinking       | string | 否       | 有、无 酗酒：有/无            |
+
+#### 返回参数
+
+> 无
 
 
 
@@ -831,13 +1002,33 @@
 }
 ```
 
-- 失败
+- 失败-血压正常
 
 ```json
 {
     "code":0,
     "msg":"失败",
-    "data": null
+    "data": "血压正常"
+}
+```
+
+- 失败-无评估结果
+
+```json
+{
+    "code":0,
+    "msg":"失败",
+    "data": "无评估结果"
+}
+```
+
+- 失败-缺少血压值
+
+```json
+{
+    "code":0,
+    "msg":"失败",
+    "data": "缺少血压值"
 }
 ```
 
@@ -885,36 +1076,37 @@
 
 #### 请求参数
 
-| 字段名             | 类型    | 描述 |                                  |
-| ------------------ | ------- | ---- | -------------------------------- |
-| userId             | varchar | 是   | 主键，对应用户ID                 |
-| sbp                | int     | 否   | 收缩压（mmHg）                   |
-| dbp                | int     | 否   | 舒张压（mmHg）                   |
-| gender             | varchar | 否   | 性别：男/女                      |
-| age                | int     | 否   | 年龄                             |
-| smoke              | varchar | 否   | 吸烟情况：吸烟/被动吸烟/不吸烟   |
-| h2_bg              | float   | 否   | 2h血糖含量（mmol/L）             |
-| fasting_bg         | float   | 否   | 空腹血糖含量（mmol/L）           |
-| dyslipidemia       | varchar | 否   | 血脂异常：是/否                  |
-| tc                 | float   | 否   | 总胆固醇含量（mmol/L）           |
-| ldl_c              | float   | 否   | 低密度脂蛋白胆固醇含量（mmol/L） |
-| hdl_c              | float   | 否   | 高密度脂蛋白胆固醇含量（mmol/L） |
-| cvd_family_history | varchar | 否   | 早发心血管病家族史：是/否        |
-| waistline          | float   | 否   | 腰围（cm）                       |
-| bmi                | float   | 否   | BMI（kg/m2)                      |
-| cysteine           | float   | 否   | 半胱氨酸含量（umol/L）           |
-| sl_voltage         | float   | 否   | 心电图Sokolow-Lyon电压（mV）     |
-| lvmi               | float   | 否   | 左心室重量指数（g/m2）           |
-| imt                | float   | 否   | 颈动脉内膜中层厚度（mm）         |
-| egfr               | float   | 否   | 肾小球滤过率（ml·min-1·1.73m-2） |
-| serum_creatinine   | float   | 否   | 血清肌酐（umol/L）               |
-| proteinuria        | float   | 否   | 蛋白尿（mg/24h）                 |
-| cvd                | varchar | 否   | 脑血管疾病：是/否                |
-| chd                | varchar | 否   | 心脏疾病：是/否                  |
-| ckd                | varchar | 否   | 肾脏疾病：是/否                  |
-| pvd                | varchar | 否   | 外周血管疾病：是/否              |
-| retionpathy        | varchar | 否   | 视网膜病变：是/否                |
-| diabetes           | varchar | 否   | 糖尿病：是/否                    |
+| 参数               | 类型    | 是否必填 | 描述                             |
+| ------------------ | ------- | -------- | -------------------------------- |
+| userId             | varchar | 是       | 主键，对应用户ID                 |
+| sbp                | int     | 否       | 收缩压（mmHg）                   |
+| dbp                | int     | 否       | 舒张压（mmHg）                   |
+| gender             | varchar | 否       | 性别：男/女                      |
+| age                | int     | 否       | 年龄                             |
+| smoke              | varchar | 否       | 吸烟情况：吸烟/被动吸烟/不吸烟   |
+| h2_bg              | float   | 否       | 2h血糖含量（mmol/L）             |
+| fasting_bg         | float   | 否       | 空腹血糖含量（mmol/L）           |
+| dyslipidemia       | varchar | 否       | 血脂异常：是/否                  |
+| tc                 | float   | 否       | 总胆固醇含量（mmol/L）           |
+| ldl_c              | float   | 否       | 低密度脂蛋白胆固醇含量（mmol/L） |
+| hdl_c              | float   | 否       | 高密度脂蛋白胆固醇含量（mmol/L） |
+| cvd_family_history | varchar | 否       | 早发心血管病家族史：是/否        |
+| waistline          | float   | 否       | 腰围（cm）                       |
+| bmi                | float   | 否       | BMI（kg/m2)                      |
+| cysteine           | float   | 否       | 半胱氨酸含量（umol/L）           |
+| sl_voltage         | float   | 否       | 心电图Sokolow-Lyon电压（mV）     |
+| lvmi               | float   | 否       | 左心室重量指数（g/m2）           |
+| imt                | float   | 否       | 颈动脉内膜中层厚度（mm）         |
+| egfr               | float   | 否       | 肾小球滤过率（ml·min-1·1.73m-2） |
+| serum_creatinine   | float   | 否       | 血清肌酐（umol/L）               |
+| proteinuria        | float   | 否       | 蛋白尿（mg/24h）                 |
+| cvd                | varchar | 否       | 脑血管疾病：是/否                |
+| chd                | varchar | 否       | 心脏疾病：是/否                  |
+| ckd                | varchar | 否       | 肾脏疾病：是/否                  |
+| pvd                | varchar | 否       | 外周血管疾病：是/否              |
+| retionpathy        | varchar | 否       | 视网膜病变：是/否                |
+| diabetes           | varchar | 否       | 糖尿病：是/否                    |
+
 
 #### 返回参数
 
@@ -944,36 +1136,36 @@
 
 #### 返回参数
 
-| 字段名             | 类型    | 描述 |                                  |
-| ------------------ | ------- | ---- | -------------------------------- |
-| userId             | varchar | 是   | 主键，对应用户ID                 |
-| sbp                | int     | 否   | 收缩压（mmHg）                   |
-| dbp                | int     | 否   | 舒张压（mmHg）                   |
-| gender             | varchar | 否   | 性别：男/女                      |
-| age                | int     | 否   | 年龄                             |
-| smoke              | varchar | 否   | 吸烟情况：吸烟/被动吸烟/不吸烟   |
-| h2_bg              | float   | 否   | 2h血糖含量（mmol/L）             |
-| fasting_bg         | float   | 否   | 空腹血糖含量（mmol/L）           |
-| dyslipidemia       | varchar | 否   | 血脂异常：是/否                  |
-| tc                 | float   | 否   | 总胆固醇含量（mmol/L）           |
-| ldl_c              | float   | 否   | 低密度脂蛋白胆固醇含量（mmol/L） |
-| hdl_c              | float   | 否   | 高密度脂蛋白胆固醇含量（mmol/L） |
-| cvd_family_history | varchar | 否   | 早发心血管病家族史：是/否        |
-| waistline          | float   | 否   | 腰围（cm）                       |
-| bmi                | float   | 否   | BMI（kg/m2)                      |
-| cysteine           | float   | 否   | 半胱氨酸含量（umol/L）           |
-| sl_voltage         | float   | 否   | 心电图Sokolow-Lyon电压（mV）     |
-| lvmi               | float   | 否   | 左心室重量指数（g/m2）           |
-| imt                | float   | 否   | 颈动脉内膜中层厚度（mm）         |
-| egfr               | float   | 否   | 肾小球滤过率（ml·min-1·1.73m-2） |
-| serum_creatinine   | float   | 否   | 血清肌酐（umol/L）               |
-| proteinuria        | float   | 否   | 蛋白尿（mg/24h）                 |
-| cvd                | varchar | 否   | 脑血管疾病：是/否                |
-| chd                | varchar | 否   | 心脏疾病：是/否                  |
-| ckd                | varchar | 否   | 肾脏疾病：是/否                  |
-| pvd                | varchar | 否   | 外周血管疾病：是/否              |
-| retionpathy        | varchar | 否   | 视网膜病变：是/否                |
-| diabetes           | varchar | 否   | 糖尿病：是/否                    |
+| 字段名             | 类型    | 描述                             |
+| ------------------ | ------- | -------------------------------- |
+| userId             | varchar | 主键，对应用户ID                 |
+| sbp                | int     | 收缩压（mmHg）                   |
+| dbp                | int     | 舒张压（mmHg）                   |
+| gender             | varchar | 性别：男/女                      |
+| age                | int     | 年龄                             |
+| smoke              | varchar | 吸烟情况：吸烟/被动吸烟/不吸烟   |
+| h2_bg              | float   | 2h血糖含量（mmol/L）             |
+| fasting_bg         | float   | 空腹血糖含量（mmol/L）           |
+| dyslipidemia       | varchar | 血脂异常：是/否                  |
+| tc                 | float   | 总胆固醇含量（mmol/L）           |
+| ldl_c              | float   | 低密度脂蛋白胆固醇含量（mmol/L） |
+| hdl_c              | float   | 高密度脂蛋白胆固醇含量（mmol/L） |
+| cvd_family_history | varchar | 早发心血管病家族史：是/否        |
+| waistline          | float   | 腰围（cm）                       |
+| bmi                | float   | BMI（kg/m2)                      |
+| cysteine           | float   | 半胱氨酸含量（umol/L）           |
+| sl_voltage         | float   | 心电图Sokolow-Lyon电压（mV）     |
+| lvmi               | float   | 左心室重量指数（g/m2）           |
+| imt                | float   | 颈动脉内膜中层厚度（mm）         |
+| egfr               | float   | 肾小球滤过率（ml·min-1·1.73m-2） |
+| serum_creatinine   | float   | 血清肌酐（umol/L）               |
+| proteinuria        | float   | 蛋白尿（mg/24h）                 |
+| cvd                | varchar | 脑血管疾病：是/否                |
+| chd                | varchar | 心脏疾病：是/否                  |
+| ckd                | varchar | 肾脏疾病：是/否                  |
+| pvd                | varchar | 外周血管疾病：是/否              |
+| retionpathy        | varchar | 视网膜病变：是/否                |
+| diabetes           | varchar | 糖尿病：是/否                    |
 
 ##### 示例
 
@@ -1020,4 +1212,4 @@
 
 ------
 
-修改时间：2020.11.17
+修改时间：2020.12.2

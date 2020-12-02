@@ -16,13 +16,13 @@
 
 #### 返回参数
 
-| 字段名    | 类型   | 描述               |
-| :-------- | :----- | ------------------ |
-| fromId    | string | 发送方id           |
-| toId      | string | 接收方id           |
-| type      | string | 消息类型 text=文本 |
-| content   | string | 消息内容           |
-| timeStamp | string | 发送消息的时间戳   |
+| 字段名    | 类型   | 描述                               |
+| :-------- | :----- | ---------------------------------- |
+| fromId    | string | 发送方id                           |
+| toId      | string | 接收方id                           |
+| type      | string | 消息类型 text=文本 friend=好友请求 |
+| content   | string | 消息内容                           |
+| timeStamp | string | 发送消息的时间戳                   |
 
 
 

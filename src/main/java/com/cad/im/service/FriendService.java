@@ -170,20 +170,15 @@ public class FriendService {
         return Result.success();
     }
 
-    public Result applyFriend(String userId, String friendId, String userName, String friendName) {
-        try {
-            if (userRelationRepository.findByUserIdAndFriendId(userId, friendId).isEmpty()) {
-                UserRelation userRelation = new UserRelation(userId, friendId, friendName, false);
-                UserRelation friendRelation = new UserRelation(friendId, userId, userName, false);
-                userRelationRepository.save(userRelation);
-                userRelationRepository.save(friendRelation);
-            } else {
-                return Result.success("好友申请已经提交");
-            }
-        } catch (Exception ex) {
-            return Result.failure(ResultCode.FAILURE, ex.toString());
-        }
-        return Result.success();
+    public Boolean isFriend(String userId, String friendId){
+        return userRelationRepository.findByUserIdAndFriendId(userId, friendId).isEmpty();
+    }
+
+    public void storeApplyFriend(String userId, String friendId, String userName, String friendName) {
+        UserRelation userRelation = new UserRelation(userId, friendId, friendName, false);
+        UserRelation friendRelation = new UserRelation(friendId, userId, userName, false);
+        userRelationRepository.save(userRelation);
+        userRelationRepository.save(friendRelation);
     }
 
     public Result agreeFriend(String userId, String friendId) {
@@ -198,7 +193,17 @@ public class FriendService {
 
     public Result nonFriends(String userId) {
         try {
-            return Result.success(userRelationRepository.findByUserIdAndStatus(userId, false));
+            List<UserRelation> nonFriends = userRelationRepository.findByUserIdAndStatus(userId, false);
+            List<JSONObject> userList = new ArrayList<>();
+            for(UserRelation f: nonFriends){
+                User user = this.getUserInfo(f.getFriendId());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("userId", user.getUserId());
+                jsonObject.put("nickName", user.getNickName());
+                jsonObject.put("avatarUrl", user.getAvatarUrl());
+                userList.add(jsonObject);
+            }
+            return Result.success(userList);
         } catch (Exception ex) {
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }
