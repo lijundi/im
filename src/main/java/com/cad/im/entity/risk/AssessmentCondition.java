@@ -35,6 +35,8 @@ public class AssessmentCondition {
     @Column(length = 10)
     private String cvd_family_history; // 早发心血管病家族史--是/否
     private Float waistline; // 腰围
+    private Float height; // 身高
+    private Float weight; // 体重
     private Float bmi; // BMI
     private Float cysteine; // 半胱氨酸含量
 

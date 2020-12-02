@@ -1092,6 +1092,8 @@
 | hdl_c              | float   | 否       | 高密度脂蛋白胆固醇含量（mmol/L） |
 | cvd_family_history | varchar | 否       | 早发心血管病家族史：是/否        |
 | waistline          | float   | 否       | 腰围（cm）                       |
+| height             | float   | 否       | 身高（cm)                        |
+| weight             | float   | 否       | 体重（kg）                       |
 | bmi                | float   | 否       | BMI（kg/m2)                      |
 | cysteine           | float   | 否       | 半胱氨酸含量（umol/L）           |
 | sl_voltage         | float   | 否       | 心电图Sokolow-Lyon电压（mV）     |
@@ -1152,6 +1154,8 @@
 | hdl_c              | float   | 高密度脂蛋白胆固醇含量（mmol/L） |
 | cvd_family_history | varchar | 早发心血管病家族史：是/否        |
 | waistline          | float   | 腰围（cm）                       |
+| height             | float   | 身高（cm)                        |
+| weight             | float   | 体重（kg）                       |
 | bmi                | float   | BMI（kg/m2)                      |
 | cysteine           | float   | 半胱氨酸含量（umol/L）           |
 | sl_voltage         | float   | 心电图Sokolow-Lyon电压（mV）     |
@@ -1180,7 +1184,7 @@
         "gender": "男",
         "age": 55,
         "smoke": "吸烟",
-        "h2Bg": null,
+        "h2_Bg": null,
         "fasting_bg": null,
         "dyslipidemia": "否",
         "tc": null,
@@ -1188,6 +1192,8 @@
         "hdl_c": null,
         "cvd_family_history": "否",
         "waistline": 80.0,
+        "height": 170,
+        "weight": 60,
         "bmi": 22.49,
         "cysteine": null,
         "sl_voltage": null,

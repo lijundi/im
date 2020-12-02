@@ -64,6 +64,12 @@ public class RiskService {
                 ac.setSbp(Integer.valueOf(sList[0]));
                 ac.setDbp(Integer.valueOf(sList[1]));
             }
+            if(height!=null){
+                ac.setHeight(height);
+            }
+            if(weight!=null){
+                ac.setWeight(weight);
+            }
             if(height!=null && weight!=null){
                 DecimalFormat df = new DecimalFormat("##.00");
                 Float bmi = Float.parseFloat(df.format((weight*10000) / (height*height)));
@@ -93,6 +99,8 @@ public class RiskService {
             String smoke = lh.getLife_smoke();
             if(smoke.equals("有")){
                 ac.setSmoke("吸烟");
+            } else if(ac.getSmoke().equals("被动吸烟") && smoke.equals("无")){
+                ac.setSmoke("被动吸烟");
             } else {
                 ac.setSmoke("不吸烟");
             }
@@ -127,12 +135,12 @@ public class RiskService {
             } else {
                 ac.setDiabetes("否");
             }
-            if(chd.equals("有")){
+            if(chd.equals("有") || ac.getChd().equals("是")){
                 ac.setChd("是");
             } else {
                 ac.setChd("否");
             }
-            if(apoplexy.equals("有")){
+            if(apoplexy.equals("有") || ac.getCvd().equals("是")){
                 ac.setCvd("是");
             } else {
                 ac.setCvd("否");
@@ -389,10 +397,7 @@ public class RiskService {
         if(ac.getSl_voltage()!=null && ac.getSl_voltage()>3.8){
             ar.setLeft_ventricular("左心室肥厚");
             flag = true;
-        } else {
-            ar.setLeft_ventricular("否");
-        }
-        if(ac.getLvmi()!=null && (ac.getLvmi()>=115&&gender.equals("男") || ac.getLvmi()>=95&&gender.equals("女"))){
+        } else if(ac.getLvmi()!=null && (ac.getLvmi()>=115&&gender.equals("男") || ac.getLvmi()>=95&&gender.equals("女"))){
             ar.setLeft_ventricular("左心室肥厚");
             flag = true;
         } else {
@@ -504,7 +509,83 @@ public class RiskService {
         arrayList.removeIf(temp -> temp.equals("否"));
     }
 
+    // 条件表更新其它表
+    private void updateOther(AssessmentCondition ac){
+        String userId = ac.getUserId();
+
+        List<PhysicalExamination> peList = physicalExaminationRepository.findByUserId(userId);
+        if(peList.size()!=0){
+            PhysicalExamination pe = peList.get(0);
+            Integer sbp = ac.getSbp();
+            Integer dbp = ac.getDbp();
+            pe.setBlood_pressure(sbp+"/"+dbp+"mmHg");
+            Float height = ac.getHeight();
+            Float weight = ac.getWeight();
+            if(height!=null){
+                pe.setHeight(height);
+            }
+            if(weight!=null){
+                pe.setWeight(weight);
+            }
+            physicalExaminationRepository.save(pe);
+        }
+
+        List<BasicInformation> biList = basicInformationRepository.findByUserId(userId);
+        if(biList.size()!=0){
+            BasicInformation bi = biList.get(0);
+            String gender = ac.getGender();
+            Integer age = ac.getAge();
+            if(gender!=null){
+                bi.setGender(gender);
+            }
+            if(age!=null){
+                bi.setAge(age);
+            }
+            basicInformationRepository.save(bi);
+        }
+
+        LifeHabits lh = lifeHabitsRepository.findById(userId).orElse(new LifeHabits());
+        String smoke = ac.getSmoke();
+        if(smoke.equals("吸烟")){
+            lh.setLife_smoke("有");
+        } else {
+            lh.setLife_smoke("无");
+        }
+        lifeHabitsRepository.save(lh);
+
+        List<MetabolicSyndromeCardiovascularDisease> mscdList = metabolicSyndromeCardiovascularDiseaseRepository.findByUserId(userId);
+        if(mscdList.size()!=0){
+            MetabolicSyndromeCardiovascularDisease mscd = mscdList.get(0);
+            String dyslipidemia = ac.getDyslipidemia();
+            String diabetes = ac.getDiabetes();
+            String retinopathy = ac.getRetionpathy();
+            String pvd = ac.getPvd();
+            if(dyslipidemia.equals("是")){
+                mscd.setDyslipidemia("有");
+            } else {
+                mscd.setDyslipidemia("无");
+            }
+            if(diabetes.equals("是")){
+                mscd.setDiabetes("有");
+            } else {
+                mscd.setDiabetes("无");
+            }
+            if(retinopathy.equals("是")){
+                mscd.setRetinopathy("有");
+            } else {
+                mscd.setRetinopathy("无");
+            }
+            if(pvd.equals("是")){
+                mscd.setPeripheral_vascular_disease("有");
+            } else {
+                mscd.setPeripheral_vascular_disease("无");
+            }
+            metabolicSyndromeCardiovascularDiseaseRepository.save(mscd);
+        }
+    }
+
     public Result  addAssessmentCondition(AssessmentCondition assessmentCondition){
+        updateOther(assessmentCondition);
         assessmentConditionRepository.save(assessmentCondition);
         return Result.success();
     }
