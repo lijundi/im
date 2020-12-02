@@ -1,5 +1,6 @@
 package com.cad.im.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,24 @@ public class RobotService {
         jo.put("event", "restart");
         ResponseEntity<JSONObject> responseEntity = postJsonObject(url, jo.toJSONString());
         return responseEntity.getBody();
+    }
+
+    public static JSONObject judgeType(JSONObject message, JSONObject msgObject) {
+        String type = msgObject.getString("type");
+        if (type.equals("navigate")) {
+            message.put("type", "navigate");
+            String navigate = msgObject.getString("navigate");
+            message.put("navigate", navigate);
+        }
+        else if (type.equals("num")) {
+            message.put("type", "num");
+        }
+        else {
+            message.put("type", "buttons");
+            JSONArray buttons = msgObject.getJSONArray("buttons");
+            message.put("buttons", buttons);
+        }
+        return message;
     }
 
     private ResponseEntity<JSONObject[]> postJsonArray(String url, String requestJson) {
