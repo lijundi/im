@@ -13,15 +13,12 @@ import java.util.List;
 @Service
 public class ProfileService {
     @Autowired
-    AntihypertensiveDrugsEffectRepository antihypertensiveDrugsEffectRepository;
-    @Autowired
     BasicInformationRepository basicInformationRepository;
     @Autowired
     ChiefComplaintRepository chiefComplaintRepository;
     @Autowired
     FamilyHaveHypertensionRepository familyHaveHypertensionRepository;
-    @Autowired
-    GeneralSituationAssessmentRepository generalSituationAssessmentRepository;
+
     @Autowired
     IncentiveHaveSymptomRepository incentiveHaveSymptomRepository;
     @Autowired
@@ -30,8 +27,7 @@ public class ProfileService {
     LifeHabitsRepository lifeHabitsRepository;
     @Autowired
     MetabolicSyndromeCardiovascularDiseaseRepository metabolicSyndromeCardiovascularDiseaseRepository;
-    @Autowired
-    PersonalFamilyHistoryRepository personalFamilyHistoryRepository;
+
     @Autowired
     PhysicalExaminationRepository physicalExaminationRepository;
     @Autowired
@@ -45,14 +41,6 @@ public class ProfileService {
     @Autowired
     UserRepository userRepository;
 
-    public List<AntihypertensiveDrugsEffect> adeList(String userId) {
-        List<AntihypertensiveDrugsEffect> aDEList = antihypertensiveDrugsEffectRepository.findByUserId(userId);
-        if(aDEList.size()!=0) {
-            return aDEList;
-        } else {
-            return null;
-        }
-    }
 
     public BasicInformation bIList(String userId) {
         List<BasicInformation> bIList = basicInformationRepository.findByUserId(userId);
@@ -81,14 +69,6 @@ public class ProfileService {
         }
     }
 
-    public GeneralSituationAssessment gsaList(String userId) {
-        List<GeneralSituationAssessment> gSAList = generalSituationAssessmentRepository.findByUserId(userId);
-        if(gSAList.size()!=0) {
-            return gSAList.get(0);
-        } else {
-            return null;
-        }
-    }
 
     public List<IncentiveHaveSymptom> ihsList(String userId) {
         List<IncentiveHaveSymptom> tmpList = incentiveHaveSymptomRepository.findByUserId(userId);
@@ -121,14 +101,6 @@ public class ProfileService {
         }
     }
 
-    public PersonalFamilyHistory pFHList(String userId) {
-        List<PersonalFamilyHistory> tmpList = personalFamilyHistoryRepository.findByUserId(userId);
-        if(tmpList.size()!=0) {
-            return tmpList.get(0);
-        } else {
-            return null;
-        }
-    }
 
     public PhysicalExamination pEList(String userId) {
         List<PhysicalExamination> tmpList = physicalExaminationRepository.findByUserId(userId);
@@ -176,15 +148,6 @@ public class ProfileService {
     }
 
 
-    public Result adeAdd(AntihypertensiveDrugsEffect a){
-        try{
-            antihypertensiveDrugsEffectRepository.save(a);
-            return Result.success();
-        } catch (Exception ex){
-            return Result.failure(ResultCode.FAILURE, ex.toString());
-        }
-    }
-
     public Result bIAdd(BasicInformation basicInfo){
         try{
             BasicInformation bI = bIList(basicInfo.getUserId());
@@ -227,23 +190,6 @@ public class ProfileService {
         }
     }
 
-    public Result gsaAdd(GeneralSituationAssessment g){
-        try{
-            GeneralSituationAssessment gsa = gsaList(g.getUserId());
-            if(gsa!=null){
-                gsa.setStaple_food(g.getStaple_food());
-                gsa.setPickles_bean_paste(g.getPickles_bean_paste());
-                gsa.setSleep_hour(g.getSleep_hour());
-                gsa.setSleep_quality(g.getSleep_quality());
-                generalSituationAssessmentRepository.save(gsa);
-            } else {
-                generalSituationAssessmentRepository.save(g);
-            }
-            return Result.success();
-        } catch (Exception ex){
-            return Result.failure(ResultCode.FAILURE, ex.toString());
-        }
-    }
 
     public Result ihsAdd(IncentiveHaveSymptom i){
         try{
@@ -293,26 +239,6 @@ public class ProfileService {
                 metabolicSyndromeCardiovascularDiseaseRepository.save(mscd);
             } else {
                 metabolicSyndromeCardiovascularDiseaseRepository.save(m);
-            }
-            return Result.success();
-        } catch (Exception ex){
-            return Result.failure(ResultCode.FAILURE, ex.toString());
-        }
-    }
-
-    public Result pFHAdd(PersonalFamilyHistory p){
-        try{
-            PersonalFamilyHistory pfh = pFHList(p.getUserId());
-            if(pfh!=null){
-                pfh.setSmoke_year(p.getSmoke_year());
-                pfh.setSmoke_num(p.getSmoke_num());
-                pfh.setHigh_drink_year(p.getHigh_drink_year());
-                pfh.setHigh_drink_quantity(p.getHigh_drink_quantity());
-                pfh.setWeek_sports_num(p.getWeek_sports_num());
-                pfh.setSnoring_night(p.getSnoring_night());
-                personalFamilyHistoryRepository.save(pfh);
-            } else {
-                personalFamilyHistoryRepository.save(p);
             }
             return Result.success();
         } catch (Exception ex){
@@ -412,9 +338,6 @@ public class ProfileService {
     public Result delByType(Integer id, Integer type){
         try{
             switch (type){
-                case 0 :
-                    antihypertensiveDrugsEffectRepository.deleteById(id);
-                    break;
                 case 1 :
                     familyHaveHypertensionRepository.deleteById(id);
                     break;
@@ -434,11 +357,7 @@ public class ProfileService {
     public Result delAllByType(String userId, Integer type){
         try{
             switch (type){
-                case 0 :
-                    if(adeList(userId)!=null){
-                        antihypertensiveDrugsEffectRepository.deleteByUserId(userId);
-                    }
-                    break;
+
                 case 1 :
                     if(fhhList(userId)!=null){
                         familyHaveHypertensionRepository.deleteByUserId(userId);

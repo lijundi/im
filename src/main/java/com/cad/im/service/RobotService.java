@@ -31,7 +31,7 @@ public class RobotService {
         return responseEntity.getBody();
     }
 
-    public static JSONObject judgeType(JSONObject message, JSONObject msgObject) {
+    public JSONObject judgeType(JSONObject message, JSONObject msgObject) {
         String type = msgObject.getString("type");
         if (type.equals("navigate")) {
             message.put("type", "navigate");

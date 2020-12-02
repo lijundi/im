@@ -81,7 +81,7 @@ public class WebSocketController {
 //                            message.put("buttons", buttons);
 //                        }
 //                    }
-                    message = RobotService.judgeType(message, msgObject);
+                    message = robotService.judgeType(message, msgObject);
                     chatService.forwardRobotMessage(message, wsChatMessage.getFromId());
                 }
                 return Result.success();

@@ -15,11 +15,6 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    @GetMapping("/ade/list")
-    public Result adeList(String userId){
-        List<AntihypertensiveDrugsEffect> adeList = profileService.adeList(userId);
-        return Result.success(adeList);
-    }
 
     @GetMapping("/basicInformation/list")
     public Result bIList(String userId){
@@ -39,11 +34,6 @@ public class ProfileController {
         return Result.success(fhhList);
     }
 
-    @GetMapping("/gsa/list")
-    public Result gsaList(String userId){
-        GeneralSituationAssessment generalSituationAssessment = profileService.gsaList(userId);
-        return Result.success(generalSituationAssessment);
-    }
 
     @GetMapping("/ihs/list")
     public Result ihsList(String userId){
@@ -69,11 +59,6 @@ public class ProfileController {
         return Result.success(mscd);
     }
 
-    @GetMapping("/pFH/list")
-    public Result pFHList(String userId){
-        PersonalFamilyHistory pfh = profileService.pFHList(userId);
-        return Result.success(pfh);
-    }
 
     @GetMapping("/physicalExamination/list")
     public Result pEList(String userId){
@@ -105,10 +90,6 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/ade/add")
-    public Result adeAdd(@RequestBody AntihypertensiveDrugsEffect ade){
-        return profileService.adeAdd(ade);
-    }
 
     @PostMapping("/basicInformation/add")
     public Result bIAdd(@RequestBody BasicInformation basicInformation){
@@ -123,11 +104,6 @@ public class ProfileController {
     @PostMapping("/fhh/add")
     public Result fhhAdd(@RequestBody FamilyHaveHypertension fhh){
         return profileService.fhhAdd(fhh);
-    }
-
-    @PostMapping("/gsa/add")
-    public Result gsaAdd(@RequestBody GeneralSituationAssessment gsa){
-        return profileService.gsaAdd(gsa);
     }
 
     @PostMapping("/ihs/add")
@@ -148,11 +124,6 @@ public class ProfileController {
     @PostMapping("/mscd/add")
     public Result mscdAdd(@RequestBody MetabolicSyndromeCardiovascularDisease mscd){
         return profileService.mscdAdd(mscd);
-    }
-
-    @PostMapping("/pFH/add")
-    public Result pFHAdd(@RequestBody PersonalFamilyHistory pfh){
-        return profileService.pFHAdd(pfh);
     }
 
     @PostMapping("/physicalExamination/add")
@@ -181,10 +152,7 @@ public class ProfileController {
     }
 
 
-    @GetMapping("/ade/del")
-    public Result adeDel(Integer id){
-        return profileService.delByType(id, 0);
-    }
+
 
     @GetMapping("/fhh/del")
     public Result fhhDel(Integer id){
@@ -201,10 +169,6 @@ public class ProfileController {
         return profileService.delByType(id, 3);
     }
 
-    @GetMapping("/ade/delAll")
-    public Result adeDelAll(String userId){
-        return profileService.delAllByType(userId, 0);
-    }
 
     @GetMapping("/fhh/delAll")
     public Result fhhDelAll(String userId){
