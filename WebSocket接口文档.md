@@ -24,6 +24,32 @@
 | content   | string | 消息内容                           |
 | timeStamp | string | 发送消息的时间戳                   |
 
+##### 示例
+
+- 系统好友请求消息
+
+```JSON
+{
+    "fromId":"2",
+    "toId":"xxxxxxxxx1",
+    "type":"friend",
+    "content":"xxxxxxxx2的好友请求",
+    "timeStamp":"2020-12-1 21:51:57"
+}
+```
+
+- 普通聊天消息
+
+```JSON
+{
+    "fromId":"xxx1",
+    "toId":"xxx2",
+    "type":"text",
+    "content":"hello",
+    "timeStamp":"2020-10-10 21:51:57"
+}
+```
+
 
 
 ### 1.2 机器人消息
@@ -221,4 +247,4 @@
 
 ------
 
-修改时间：2020.10.29
+修改时间：2020.12.2
