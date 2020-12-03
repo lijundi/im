@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PreviousBloodPressureMeasurementRepository extends JpaRepository<PreviousBloodPressureMeasurement, Integer> {
+public interface PreviousBloodPressureMeasurementRepository extends JpaRepository<PreviousBloodPressureMeasurement, String> {
     public List<PreviousBloodPressureMeasurement> findByUserId(String userId);
 }
