@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChiefComplaintRepository extends JpaRepository<ChiefComplaint, Integer> {
+public interface ChiefComplaintRepository extends JpaRepository<ChiefComplaint, String> {
 
     public List<ChiefComplaint> findByUserId(String userId);
 }
