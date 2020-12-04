@@ -544,14 +544,16 @@ public class RiskService {
             basicInformationRepository.save(bi);
         }
 
-        LifeHabits lh = lifeHabitsRepository.findById(userId).orElse(new LifeHabits());
-        String smoke = ac.getSmoke();
-        if(smoke.equals("吸烟")){
-            lh.setLife_smoke("有");
-        } else {
-            lh.setLife_smoke("无");
+        LifeHabits lh = lifeHabitsRepository.findById(userId).orElse(null);
+        if(lh!=null){
+            String smoke = ac.getSmoke();
+            if(smoke.equals("吸烟")){
+                lh.setLife_smoke("有");
+            } else {
+                lh.setLife_smoke("无");
+            }
+            lifeHabitsRepository.save(lh);
         }
-        lifeHabitsRepository.save(lh);
 
         List<MetabolicSyndromeCardiovascularDisease> mscdList = metabolicSyndromeCardiovascularDiseaseRepository.findByUserId(userId);
         if(mscdList.size()!=0){

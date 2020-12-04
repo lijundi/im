@@ -33,18 +33,23 @@ public class RobotService {
 
     public JSONObject judgeType(JSONObject message, JSONObject msgObject) {
         String type = msgObject.getString("type");
-        if (type.equals("navigate")) {
-            message.put("type", "navigate");
-            String navigate = msgObject.getString("navigate");
-            message.put("navigate", navigate);
-        }
-        else if (type.equals("num")) {
-            message.put("type", "num");
-        }
-        else {
-            message.put("type", "buttons");
-            JSONArray buttons = msgObject.getJSONArray("buttons");
-            message.put("buttons", buttons);
+        switch (type) {
+            case "navigate":
+                message.put("type", "navigate");
+                String navigate = msgObject.getString("navigate");
+                message.put("navigate", navigate);
+                break;
+            case "num":
+                message.put("type", "num");
+                break;
+            case "buttons":
+                message.put("type", "buttons");
+                JSONArray buttons = msgObject.getJSONArray("buttons");
+                message.put("buttons", buttons);
+                break;
+            default:
+                message.put("type", "bp");
+                break;
         }
         return message;
     }

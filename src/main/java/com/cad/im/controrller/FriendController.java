@@ -73,7 +73,7 @@ public class FriendController {
         try {
             if(friendService.isFriend(userId, friendId)){
                 friendService.storeApplyFriend(userId, friendId, userName, friendName);
-                String text = friendName + "的好友申请";
+                String text = userName + "的好友申请";
                 WsChatMessage wsChatMsg = new WsChatMessage("2",
                         friendId, "friend", text, new Date());
                 chatService.storeChatMessage(wsChatMsg);
