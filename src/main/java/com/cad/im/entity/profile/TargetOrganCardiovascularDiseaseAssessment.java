@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class TargetOrganCardiovascularDiseaseAssessment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     private Integer tocda_climb_floor_num; // 爬楼层数
     @Column(length = 10)
@@ -17,6 +17,5 @@ public class TargetOrganCardiovascularDiseaseAssessment {
     private Integer tocda_night_urine_num; // 睡着后夜尿次数
     private Integer tocda_day_urine_num; // 白天一般尿次数
 
-    @Column(length = 50)
-    private String userId;
+
 }

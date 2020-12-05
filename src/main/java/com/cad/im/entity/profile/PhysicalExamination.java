@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class PhysicalExamination {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     private String blood_pressure; // 血压值
     private Integer heart_rate; // 心率
@@ -19,7 +19,5 @@ public class PhysicalExamination {
     @Column(length = 10)
     private String edema_both_lower_limbs; // 有、无 双下肢浮肿
 
-    @Column(length = 50)
-    private String userId;
 
 }

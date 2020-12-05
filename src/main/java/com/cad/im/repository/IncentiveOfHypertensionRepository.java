@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IncentiveOfHypertensionRepository extends JpaRepository<IncentiveOfHypertension, Integer> {
+public interface IncentiveOfHypertensionRepository extends JpaRepository<IncentiveOfHypertension, String> {
     public List<IncentiveOfHypertension> findByUserId(String userId);
 }

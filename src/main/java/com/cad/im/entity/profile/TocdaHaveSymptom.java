@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class TocdaHaveSymptom {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     private String dis_onset; // 部位
     private String dis_property; // 性质
@@ -19,6 +19,5 @@ public class TocdaHaveSymptom {
     private Integer dis_duration; // 每次发作的持续时间
     private String time_unit; // 时间单位
 
-    @Column(length = 50)
-    private String userId;
+
 }

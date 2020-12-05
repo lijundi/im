@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SecondaryHypertensionRepository extends JpaRepository<SecondaryHypertension, Integer> {
+public interface SecondaryHypertensionRepository extends JpaRepository<SecondaryHypertension, String> {
     public List<SecondaryHypertension> findByUserId(String userId);
 }

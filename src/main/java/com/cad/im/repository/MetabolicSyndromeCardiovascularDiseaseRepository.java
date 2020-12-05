@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MetabolicSyndromeCardiovascularDiseaseRepository extends JpaRepository<MetabolicSyndromeCardiovascularDisease, Integer> {
+public interface MetabolicSyndromeCardiovascularDiseaseRepository extends JpaRepository<MetabolicSyndromeCardiovascularDisease, String> {
     public List<MetabolicSyndromeCardiovascularDisease> findByUserId(String userId);
 }

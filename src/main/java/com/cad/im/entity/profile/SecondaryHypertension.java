@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class SecondaryHypertension {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     @Column(length = 10)
     private String secondary_hypt_fever_cold; // 有、无 发热、感冒
@@ -22,6 +22,5 @@ public class SecondaryHypertension {
     private Integer secondary_hypt_night_urine_num; // 睡着后夜尿次数
     private Integer secondary_hypt_day_urine_num; // 白天一般尿次数
 
-    @Column(length = 50)
-    private String userId;
+
 }

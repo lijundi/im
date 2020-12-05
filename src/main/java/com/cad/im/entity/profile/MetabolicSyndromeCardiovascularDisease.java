@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class MetabolicSyndromeCardiovascularDisease {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 自增主键
+    @Column(length = 50)
+    private String userId;
 
     @Column(length = 10)
     private String diabetes; // 有、无 糖尿病
@@ -24,6 +24,4 @@ public class MetabolicSyndromeCardiovascularDisease {
     @Column(length = 10)
     private String retinopathy; // 有、无 视网膜病变
 
-    @Column(length = 50)
-    private String userId;
 }
