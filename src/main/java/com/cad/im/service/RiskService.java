@@ -357,7 +357,18 @@ public class RiskService {
         } else {
             ar.setChd("否");
         }
+        Float sc = ac.getSerum_creatinine();
+        String gender = ac.getGender();
         if(ac.getCkd().equals("是")){
+            ar.setCkd("肾脏疾病");
+            flag = true;
+        } else if(ac.getEgfr()!=null && ac.getEgfr()<30){
+            ar.setCkd("肾脏疾病");
+            flag = true;
+        } else if(sc!=null && (sc>=133&&gender.equals("男") || sc>=124&&gender.equals("女"))){
+            ar.setCkd("肾脏疾病");
+            flag = true;
+        } else if(ac.getProteinuria()!=null && ac.getProteinuria()>=300){
             ar.setCkd("肾脏疾病");
             flag = true;
         } else {
@@ -376,6 +387,9 @@ public class RiskService {
             ar.setRetinopathy("否");
         }
         if(ac.getDiabetes().equals("是")){
+            ar.setDiabetes("糖尿病");
+            flag = true;
+        } else if(ac.getH2_bg()!=null && Float.compare(ac.getH2_bg(), (float) 11.1)!=-1 && ac.getFasting_bg()!=null && Float.compare(ac.getFasting_bg(), (float) 7.0)!=-1){
             ar.setDiabetes("糖尿病");
             flag = true;
         } else {
@@ -397,32 +411,32 @@ public class RiskService {
         if(ac.getSl_voltage()!=null && ac.getSl_voltage()>3.8){
             ar.setLeft_ventricular("左心室肥厚");
             flag = true;
-        } else if(ac.getLvmi()!=null && (ac.getLvmi()>=115&&gender.equals("男") || ac.getLvmi()>=95&&gender.equals("女"))){
+        } else if(ac.getLvmi()!=null && (Float.compare(ac.getLvmi(), 115)!=-1&&gender.equals("男") || Float.compare(ac.getLvmi(), 95)!=-1&&gender.equals("女"))){
             ar.setLeft_ventricular("左心室肥厚");
             flag = true;
         } else {
             ar.setLeft_ventricular("否");
         }
-        if(ac.getImt()!=null && ac.getImt()>=0.9){
+        if(ac.getImt()!=null && Float.compare(ac.getImt(), (float) 0.9)!=-1){
             ar.setUsca("超声显示颈动脉粥样硬化");
             flag = true;
         } else {
             ar.setUsca("否");
         }
-        if(ac.getEgfr()!=null && ac.getEgfr()>=30&&ac.getEgfr()<=59){
+        if(ac.getEgfr()!=null && Float.compare(ac.getEgfr(), 30)!=-1&&ac.getEgfr()<59){
             ar.setDgfr("肾小球滤过率降低");
             flag = true;
         } else {
             ar.setDgfr("否");
         }
         Float sc = ac.getSerum_creatinine();
-        if(sc!=null && (sc>=115&&sc<=133&&gender.equals("男") || sc>=107&&sc<=124&&gender.equals("女"))){
+        if(sc!=null && (Float.compare(sc, 115)!=-1&&sc<133&&gender.equals("男") || Float.compare(sc, 107)!=-1&&sc<124&&gender.equals("女"))){
             ar.setIsc("血清肌酐升高");
             flag = true;
         } else {
             ar.setIsc("否");
         }
-        if(ac.getProteinuria()!=null && ac.getProteinuria()>=30&&ac.getProteinuria()<=300){
+        if(ac.getProteinuria()!=null && Float.compare(ac.getProteinuria(), 30)!=-1&&ac.getProteinuria()<300){
             ar.setMicroalbuminuria("微量白蛋白尿");
             flag = true;
         } else {
@@ -455,20 +469,29 @@ public class RiskService {
         } else {
             ar.setSmoke("否");
         }
-        if(ac.getH2_Bg()!=null && ac.getH2_Bg()>=7.8&&ac.getH2_Bg()<=11.0){
-            ar.setIgt("糖耐量受损");
+        if(ac.getH2_bg()!=null && Float.compare(ac.getH2_bg(), (float) 7.8)!=-1&&ac.getH2_bg()<11.1){
+            if(ac.getFasting_bg()!=null && Float.compare(ac.getFasting_bg(), (float) 6.1)!=-1&&ac.getFasting_bg()<7.0){
+                ar.setIgt("糖耐量受损和空腹血糖异常");
+            } else {
+                ar.setIgt("糖耐量受损");
+            }
             rfNum+=1;
         } else {
-            ar.setIgt("否");
+            if(ac.getFasting_bg()!=null && Float.compare(ac.getFasting_bg(), (float) 6.1)!=-1&&ac.getFasting_bg()<7.0){
+                ar.setIgt("空腹血糖异常");
+                rfNum+=1;
+            } else {
+                ar.setIgt("否");
+            }
         }
         if(ac.getDyslipidemia().equals("是")){
             ar.setDyslipidemia("血脂异常");
             rfNum+=1;
         } else {
-            if(ac.getTc()!=null && ac.getTc()>=5.2){
+            if(ac.getTc()!=null && Float.compare(ac.getTc(), (float) 5.2)!=-1){
                 ar.setDyslipidemia("血脂异常");
                 rfNum+=1;
-            } else if(ac.getLdl_c()!=null && ac.getLdl_c()>=3.4){
+            } else if(ac.getLdl_c()!=null && Float.compare(ac.getLdl_c(), (float) 3.4)!=-1){
                 ar.setDyslipidemia("血脂异常");
                 rfNum+=1;
             } else if(ac.getHdl_c()!=null && ac.getHdl_c()<1.0){
@@ -484,16 +507,16 @@ public class RiskService {
         } else {
             ar.setCvd_family_history("否");
         }
-        if(ac.getWaistline()!=null && (ac.getWaistline()>=90&&ac.getGender().equals("男") || ac.getWaistline()>=85&&ac.getGender().equals("女"))){
-            ar.setAbdominal_obesity("腹型肥胖");
+        if(ac.getBmi()!=null && ac.getBmi()>=28){
+            ar.setAbdominal_obesity("肥胖");
             rfNum+=1;
-        } else if(ac.getBmi()!=null && ac.getBmi()>=28){
+        } else if(ac.getWaistline()!=null && (Float.compare(ac.getWaistline(), 90)!=-1&&ac.getGender().equals("男") || Float.compare(ac.getWaistline(), 85)!=-1&&ac.getGender().equals("女"))){
             ar.setAbdominal_obesity("腹型肥胖");
             rfNum+=1;
         } else {
             ar.setAbdominal_obesity("否");
         }
-        if(ac.getCysteine()!=null && ac.getCysteine()>=15){
+        if(ac.getCysteine()!=null && Float.compare(ac.getCysteine(), 15)!=-1){
             ar.setHhe("高同型半胱氨酸血症");
             rfNum+=1;
         } else {
@@ -518,14 +541,20 @@ public class RiskService {
             PhysicalExamination pe = peList.get(0);
             Integer sbp = ac.getSbp();
             Integer dbp = ac.getDbp();
-            pe.setBlood_pressure(sbp+"/"+dbp+"mmHg");
+            if(sbp!=null&&dbp!=null){
+                pe.setBlood_pressure(sbp+"/"+dbp+"mmHg");
+            }
             Float height = ac.getHeight();
             Float weight = ac.getWeight();
+            Float waistline = ac.getWaistline();
             if(height!=null){
                 pe.setHeight(height);
             }
             if(weight!=null){
                 pe.setWeight(weight);
+            }
+            if(waistline!=null){
+                pe.setWaistline(waistline);
             }
             physicalExaminationRepository.save(pe);
         }

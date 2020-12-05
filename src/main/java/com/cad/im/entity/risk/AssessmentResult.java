@@ -29,13 +29,13 @@ public class AssessmentResult {
     @Column(length = 50)
     private String smoke; // 吸烟情况：吸烟/被动吸烟/否
     @Column(length = 50)
-    private String igt; // 糖耐量情况：糖耐量受损/否
+    private String igt; // 血糖情况：糖耐量受损/空腹血糖异常/糖耐量受损和空腹血糖异常/否
     @Column(length = 50)
     private String dyslipidemia; // 血脂情况：血脂异常/否
     @Column(length = 50)
     private String cvd_family_history; // 早发心血管病家族史：早发心血管病家族史/否
     @Column(length = 50)
-    private String abdominal_obesity; // 腹型肥胖：腹型肥胖/否
+    private String abdominal_obesity; // 腹型肥胖：腹型肥胖/肥胖/否
     @Column(length = 50)
     private String hhe; // 半胱氨酸：高同型半胱氨酸血症/否
     private Integer rfNum; // 危险因素数量

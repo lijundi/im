@@ -19,6 +19,7 @@ public class ChatMessage {
     private String toId;
     @Column(length = 50)
     private String type; //text,image,friend
+    @Column(columnDefinition = "TEXT")
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
