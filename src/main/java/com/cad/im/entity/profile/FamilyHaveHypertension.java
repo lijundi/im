@@ -15,6 +15,5 @@ public class FamilyHaveHypertension {
     private String family_who; // 患病人
     private Integer family_hypertension_age; // 发病年龄
 
-    private Integer userId;
-
+    private String userId;
 }

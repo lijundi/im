@@ -19,5 +19,5 @@ public class TocdaHaveSymptom {
     private Integer dis_duration; // 每次发作的持续时间
     private String time_unit; // 时间单位
 
-    private Integer userId;
+    private String userId;
 }

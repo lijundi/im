@@ -16,5 +16,5 @@ public class IncentiveHaveSymptom {
     private String dis_degree; // 程度
     private String incentive_process_detail; // 若为""表示无处理
 
-    private Integer userId;
+    private String userId;
 }
