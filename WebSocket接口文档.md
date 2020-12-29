@@ -67,8 +67,8 @@
 | 字段名        | 类型            | 描述                                                         |
 | :------------ | :-------------- | ------------------------------------------------------------ |
 | wsChatMessage | message         | 回复消息                                                     |
-| type          | string          | 用户输入类型 text=文本 bp=血压值输入框 num=数字输入框 navigate=页面跳转 buttons=选择项 |
-| buttons       | array of string | 当type=buttons时返回该字段，表示选择项                       |
+| type          | string          | 用户输入类型 text=文本输入框 bp=血压值输入框 num=数字输入框 navigate=页面跳转 buttons=选择项 btnsText=选择项加文本输入框 |
+| buttons       | array of string | 当type=buttons或btnsText时返回该字段，表示选择项             |
 | navigate      | string          | 当type=navigate时返回该字段，表示要跳转的页面 medicine=用药管理 risk=风险评估 |
 
 ##### message
@@ -88,7 +88,7 @@
 ```JSON
 {
     "wsChatMessage":{
-        "fromId":"xxx1",
+        "fromId":"1",
         "toId":"xxx2",
         "type":"text",
         "content":"hello",
@@ -104,7 +104,7 @@
 ```JSON
 {
     "wsChatMessage":{
-        "fromId":"xxx1",
+        "fromId":"1",
         "toId":"xxx2",
         "type":"text",
         "content":"hello",
@@ -119,7 +119,7 @@
 ```JSON
 {
     "wsChatMessage":{
-        "fromId":"xxx1",
+        "fromId":"1",
         "toId":"xxx2",
         "type":"text",
         "content":"hello",
@@ -130,6 +130,58 @@
         "主诉",
         "退出问诊"
     ]
+}
+```
+
+
+
+### 1.3 系统消息
+
+#### 接口描述
+
+> 接收系统消息
+
+#### URL
+
+> /user/topic/systemChat
+
+#### 返回参数
+
+| 字段名    | 类型   | 描述                                                         |
+| :-------- | :----- | ------------------------------------------------------------ |
+| type      | string | 消息类型 bp=血压监测 friend=好友请求 tocda=靶器官及心血管病症状评估 |
+| content   | string | 消息内容                                                     |
+| timeStamp | string | 发送消息的时间戳                                             |
+
+##### 示例
+
+- 系统好友请求消息
+
+```JSON
+{
+    "type":"friend",
+    "content":"xxxxxxxx2的好友请求",
+    "timeStamp":"2020-12-1 21:51:57"
+}
+```
+
+- 血压监测消息
+
+```JSON
+{
+    "type":"bp",
+    "content":"您该测量今天的血压了，请及时录入！",
+    "timeStamp":"2020-12-10 16:24:01"
+}
+```
+
+- 靶器官及心血管病症状评估消息
+
+```JSON
+{
+    "type":"tocda",
+    "content":"您该填写靶器官及心血管病症状评估表单了，请及时录入！",
+    "timeStamp":"2020-12-10 16:24:01"
 }
 ```
 
@@ -247,4 +299,4 @@
 
 ------
 
-修改时间：2020.12.2
+修改时间：2020.12.29
