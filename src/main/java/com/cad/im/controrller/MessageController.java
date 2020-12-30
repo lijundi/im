@@ -49,4 +49,24 @@ public class MessageController {
             return Result.failure(ResultCode.FAILURE, ex.toString());
         }
     }
+
+    //离线系统消息
+    @GetMapping("/offline/system")
+    public Result getSystemOffline(String userId){
+        try{
+            return Result.success(messageService.getSystemOffline(userId));
+        }catch (Exception ex){
+            return Result.failure(ResultCode.FAILURE, ex.toString());
+        }
+    }
+
+    //历史系统消息
+    @GetMapping("/history/system")
+    public Result getSystemHistory(String userId, String timeStamp){
+        try{
+            return Result.success(messageService.getSystemHistory(userId, timeStamp));
+        }catch (Exception ex){
+            return Result.failure(ResultCode.FAILURE, ex.toString());
+        }
+    }
 }

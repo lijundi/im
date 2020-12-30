@@ -35,7 +35,7 @@ public class FriendService {
         Map map = new HashMap();
         users.remove(0);
         for (User user : users) {
-            FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+            FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), user.getIdentity(),false);
             map.put(user.getUserId(), friend);
         }
         for (UserRelation userRelation : friends) {
@@ -52,12 +52,14 @@ public class FriendService {
                 friendMap.put("userId", friend.getFriendId());
                 friendMap.put("nickName", friend.getNickName());
                 friendMap.put("avatarUrl", friend.getAvatarUrl());
+                friendMap.put("identity", friend.getIdentity());
                 retfriends.add(friendMap);
             } else {
                 JSONObject nonfriendMap = new JSONObject();
                 nonfriendMap.put("userId", friend.getFriendId());
                 nonfriendMap.put("nickName", friend.getNickName());
                 nonfriendMap.put("avatarUrl", friend.getAvatarUrl());
+                nonfriendMap.put("identity", friend.getIdentity());
                 retnonfriends.add(nonfriendMap);
             }
         }
@@ -84,7 +86,7 @@ public class FriendService {
         }
         for (User user : tempusers) {
             if (!userId.equals(user.getUserId())) {
-                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), user.getIdentity(),false);
                 map.put(user.getUserId(), friend);
             }
         }
@@ -107,12 +109,14 @@ public class FriendService {
                 friendMap.put("userId", friend.getFriendId());
                 friendMap.put("nickName", friend.getNickName());
                 friendMap.put("avatarUrl", friend.getAvatarUrl());
+                friendMap.put("identity", friend.getIdentity());
                 retfriends.add(friendMap);
             } else {
                 JSONObject nonfriendMap = new JSONObject();
                 nonfriendMap.put("userId", friend.getFriendId());
                 nonfriendMap.put("nickName", friend.getNickName());
                 nonfriendMap.put("avatarUrl", friend.getAvatarUrl());
+                nonfriendMap.put("identity", friend.getIdentity());
                 retnonfriends.add(nonfriendMap);
             }
         }
@@ -130,7 +134,7 @@ public class FriendService {
             users.remove(0);
             Map map = new HashMap();
             for (User user : users) {
-                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), false);
+                FriendInfo friend = new FriendInfo(userId, user.getUserId(), user.getNickName(), user.getAvatarUrl(), user.getIdentity(), false);
                 map.put(user.getUserId(), friend);
             }
             for (UserRelation userRelation : friends) {
@@ -147,6 +151,7 @@ public class FriendService {
                     friendMap.put("userId", friend.getFriendId());
                     friendMap.put("nickName", friend.getNickName());
                     friendMap.put("avatarUrl", friend.getAvatarUrl());
+                    friendMap.put("identity", friend.getIdentity());
                     retfriends.add(friendMap);
                 }
             }
@@ -201,6 +206,7 @@ public class FriendService {
                 jsonObject.put("userId", user.getUserId());
                 jsonObject.put("nickName", user.getNickName());
                 jsonObject.put("avatarUrl", user.getAvatarUrl());
+                jsonObject.put("identity", user.getIdentity());
                 userList.add(jsonObject);
             }
             return Result.success(userList);
