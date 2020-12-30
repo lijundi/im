@@ -47,6 +47,11 @@ public class RobotService {
                 JSONArray buttons = msgObject.getJSONArray("buttons");
                 message.put("buttons", buttons);
                 break;
+            case "btnsText":
+                message.put("type", "btnsText");
+                JSONArray btns = msgObject.getJSONArray("buttons");
+                message.put("buttons", btns);
+                break;
             default:
                 message.put("type", "bp");
                 break;
