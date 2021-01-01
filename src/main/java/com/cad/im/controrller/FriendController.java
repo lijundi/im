@@ -55,6 +55,7 @@ public class FriendController {
             jsonObject.put("userId", friend.getUserId());
             jsonObject.put("nickName", friend.getNickName());
             jsonObject.put("avatarUrl", friend.getAvatarUrl());
+            jsonObject.put("identity", friend.getIdentity());
             return Result.success(jsonObject);
         } catch (Exception ex) {
             return Result.failure(ResultCode.FAILURE, ex.toString());

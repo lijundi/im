@@ -1,14 +1,19 @@
 package com.cad.im.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.mysql.ChatMessage;
 import com.cad.im.repository.ChatMessageRepository;
+import com.cad.im.util.Result;
+import com.cad.im.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Name: com.cad.im.service.MessageService
@@ -21,6 +26,8 @@ import java.util.List;
 public class MessageService {
     @Autowired
     ChatMessageRepository chatMessageRepository;
+    @Autowired
+    SimpMessagingTemplate SMT;
 
     public List<ChatMessage> getMessages(String userId){
         List<ChatMessage> chatMessageList = chatMessageRepository.getOfflines(userId);
@@ -36,5 +43,20 @@ public class MessageService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(timeStamp);
         return chatMessageRepository.getHistorys(userId, friendId, date);
+    }
+
+    public List<Map<String, Object>> getSystemOffline(String userId){
+        return chatMessageRepository.getSystemOffline(userId);
+    }
+
+    public List<Map<String, Object>> getSystemHistory(String userId, String timeStamp) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf.parse(timeStamp);
+        return chatMessageRepository.getSystemHistory(userId, date);
+    }
+
+    // 转发系统消息
+    public void forwardSystemMessage(JSONObject message, String toId) {
+        SMT.convertAndSendToUser(toId, "/topic/systemChat", message);
     }
 }
