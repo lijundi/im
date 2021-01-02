@@ -2,7 +2,9 @@ package com.cad.im.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.mysql.ChatMessage;
+import com.cad.im.entity.mysql.SystemMessage;
 import com.cad.im.repository.ChatMessageRepository;
+import com.cad.im.repository.SystemMessageRepository;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class MessageService {
     ChatMessageRepository chatMessageRepository;
     @Autowired
     SimpMessagingTemplate SMT;
+    @Autowired
+    SystemMessageRepository systemMessageRepository;
 
     public List<ChatMessage> getMessages(String userId){
         List<ChatMessage> chatMessageList = chatMessageRepository.getOfflines(userId);
@@ -56,7 +60,14 @@ public class MessageService {
     }
 
     // 转发系统消息
-    public void forwardSystemMessage(JSONObject message, String toId) {
-        SMT.convertAndSendToUser(toId, "/topic/systemChat", message);
+    public void forwardSystemMessage(SystemMessage systemMessage, String toId) {
+        SMT.convertAndSendToUser(toId, "/topic/systemChat", systemMessage);
     }
+
+    public Result addMessages(SystemMessage systemMessage){
+        systemMessageRepository.save(systemMessage);
+        return Result.success();
+    }
+
+
 }
