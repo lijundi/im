@@ -38,4 +38,9 @@ public class KnowledgeController {
         return knowledgeService.getAnswer(jsonObject.toString());
     }
 
+    @GetMapping("next")
+    public Result getNextList(int id) {
+        return knowledgeService.getNextList(id);
+    }
+
 }
