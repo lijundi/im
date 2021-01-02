@@ -1059,7 +1059,7 @@
 | 字段名 | 类型               | 描述                              |
 | ------ | ------------------ | --------------------------------- |
 | type   | string             | 类型 dir=目录 qa=问题             |
-|        | array of directory | 当type为dir时，此字段返回目录列表 |
+| dList  | array of directory | 当type为dir时，此字段返回目录列表 |
 | qList  | array of question  | 当type为qa时，此字段返回问题列表  |
 
 ##### directory
@@ -1116,7 +1116,7 @@
     "msg": "成功",
     "data": {
         "type": "qa",
-        "dList": [
+        "qList": [
             {
                 "qid": "1603074677241",
                 "content": "高血压的分类"
