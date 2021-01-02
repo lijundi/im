@@ -3,16 +3,14 @@ package com.cad.im.controrller;
 import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.mysql.ChatMessage;
 import com.cad.im.entity.mysql.SystemMessage;
+import com.cad.im.entity.websocket.WsSystemMessage;
 import com.cad.im.service.MessageService;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Name: com.cad.im.controrller.MessageController
@@ -69,9 +67,21 @@ public class MessageController {
         }
     }
 
-    //保存离线系统消息
-    @PostMapping("/add")
-    public Result addMessages(@RequestBody SystemMessage systemMessage){
-        return messageService.addMessages(systemMessage);
+    //测试系统消息
+    @GetMapping("/system/test")
+    public Result addMessages(String type, String toId){
+        WsSystemMessage systemMessage;
+        switch (type){
+            case "bp":
+                systemMessage = new WsSystemMessage(type, "血压监测", new Date());
+                break;
+            case "friend":
+                systemMessage = new WsSystemMessage(type, "好友请求", new Date());
+                break;
+            default:
+                systemMessage = new WsSystemMessage(type, "靶器官及心血管病症状评估", new Date());
+        }
+        messageService.forwardSystemMessage(systemMessage, toId);
+        return Result.success();
     }
 }
