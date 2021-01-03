@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MonitorRepository extends JpaRepository<BpMonitor, Long> {
-    public List findByUserId(String userId);
+    public List<BpMonitor> findByUserId(String userId);
 }

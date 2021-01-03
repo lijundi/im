@@ -2,9 +2,9 @@ package com.cad.im.controrller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cad.im.entity.mysql.User;
-import com.cad.im.entity.websocket.WsChatMessage;
-import com.cad.im.service.ChatService;
+import com.cad.im.entity.websocket.WsSystemMessage;
 import com.cad.im.service.FriendService;
+import com.cad.im.service.MessageService;
 import com.cad.im.service.SessionHandler;
 import com.cad.im.util.Result;
 import com.cad.im.util.ResultCode;
@@ -26,7 +26,7 @@ public class FriendController {
     @Autowired
     FriendService friendService;
     @Autowired
-    ChatService chatService;
+    MessageService messageService;
     @Autowired
     SessionHandler sessionHandler;
 
@@ -75,11 +75,10 @@ public class FriendController {
             if(friendService.isFriend(userId, friendId)){
                 friendService.storeApplyFriend(userId, friendId, userName, friendName);
                 String text = userName + "的好友申请";
-                WsChatMessage wsChatMsg = new WsChatMessage("2",
-                        friendId, "friend", text, new Date());
-                chatService.storeChatMessage(wsChatMsg);
-                if (sessionHandler.isOnline(friendId)) {
-                    chatService.forwardMessage(wsChatMsg);
+                WsSystemMessage wsSystemMessage = new WsSystemMessage("friend", text, new Date());
+                messageService.storeSystemMessage(wsSystemMessage, friendId);
+                if(sessionHandler.isOnline(friendId)){
+                    messageService.forwardSystemMessage(wsSystemMessage, friendId);
                 }
                 return Result.success();
             } else {

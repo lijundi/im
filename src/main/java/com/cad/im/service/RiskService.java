@@ -1,6 +1,8 @@
 package com.cad.im.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cad.im.bean.TaskHandler;
+import com.cad.im.entity.mysql.MonitorTask;
 import com.cad.im.entity.profile.*;
 import com.cad.im.entity.risk.*;
 import com.cad.im.repository.*;
@@ -24,6 +26,11 @@ public class RiskService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RiskService.class);
     private final AssessmentConditionRepository assessmentConditionRepository;
     private final AssessmentResultRepository assessmentResultRepository;
+
+    @Autowired
+    private MonitorTaskRepository monitorTaskRepository;
+    @Autowired
+    private TaskHandler taskHandler;
 
     private final PhysicalExaminationRepository physicalExaminationRepository;
     private final BasicInformationRepository basicInformationRepository;
@@ -167,6 +174,8 @@ public class RiskService {
         if(ac.getDbp()==null || ac.getSbp()==null){
             throw new Exception("缺少血压值");
         }
+        // 暂存之前的评估结果
+        String tmpRiskLevel = ar.getRiskLevel();
         Integer sbp = ac.getSbp();
         Integer dbp = ac.getDbp();
         // 血压分级判断
@@ -290,6 +299,25 @@ public class RiskService {
         }
 
         assessmentResultRepository.save(ar);
+        // 生成监测任务
+        MonitorTask monitorTask = monitorTaskRepository.findById(userId).orElse(null);
+        if(monitorTask==null || !tmpRiskLevel.equals(ar.getRiskLevel())) {
+            switch (ar.getRiskLevel()) {
+                case "正常":
+                    monitorTask = taskHandler.createTask(userId, "year1&day1");
+                    break;
+                case "低危":
+                    monitorTask = taskHandler.createTask(userId, "4week#day2");
+                    break;
+                case "中危":
+                    monitorTask = taskHandler.createTask(userId, "2week#day2");
+                    break;
+                default:
+                    monitorTask = taskHandler.createTask(userId, "day3");
+            }
+            monitorTaskRepository.save(monitorTask);
+        }
+
     }
 
     // 封装评估结果

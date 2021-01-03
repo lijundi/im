@@ -67,10 +67,16 @@ public class MessageService {
         return wsSystemMessageList;
     }
 
-    public List<Map<String, Object>> getSystemHistory(String userId, String timeStamp) throws ParseException {
+    public List<WsSystemMessage> getSystemHistory(String userId, String timeStamp) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(timeStamp);
-        return systemMessageRepository.getSystemHistory(userId, date);
+        List<SystemMessage> systemMessageList = systemMessageRepository.getSystemHistory(userId, date);
+        List<WsSystemMessage> wsSystemMessageList = new ArrayList<>();
+        for(SystemMessage systemMessage : systemMessageList){
+            WsSystemMessage wsSystemMessage = new WsSystemMessage(systemMessage.getType(), systemMessage.getContent(), systemMessage.getTimeStamp());
+            wsSystemMessageList.add(wsSystemMessage);
+        }
+        return wsSystemMessageList;
     }
 
     // 转发系统消息

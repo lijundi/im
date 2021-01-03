@@ -14,6 +14,6 @@ public interface SystemMessageRepository extends JpaRepository<SystemMessage, Lo
     @Query(value = "select * from system_message  where to_id = ?1 and offline = 1", nativeQuery = true)
     List<SystemMessage> getSystemOffline(String userId);
 
-    @Query(value = "select type, content, time_stamp as timeStamp from system_message where  to_id = ?1 and time_stamp < ?2 ORDER BY time_stamp DESC limit 10", nativeQuery = true)
-    List<Map<String, Object>> getSystemHistory(String userId, Date timeStamp);
+    @Query(value = "select * from system_message where  to_id = ?1 and time_stamp < ?2 ORDER BY time_stamp DESC limit 10", nativeQuery = true)
+    List<SystemMessage> getSystemHistory(String userId, Date timeStamp);
 }
