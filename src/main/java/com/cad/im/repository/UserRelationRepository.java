@@ -33,8 +33,11 @@ public interface UserRelationRepository extends JpaRepository<UserRelation, Long
     @Query(value = "update user_relation set status = true where user_id = ?1 and friend_id = ?2", nativeQuery = true)
     void updateRelation(String userId, String friendId);
 
-    //查询好友申请列表
-    @Query(value = "select * from user_relation where user_id = ?1 and status = ?2", nativeQuery = true)
+    //查询申请列表
+    @Query(value = "select * from user_relation where user_id = ?1 and status = ?2 and symbol = ?3", nativeQuery = true)
+    List<UserRelation> findNonFriends(String userId, Boolean status, String symbol);
+
+    //查询好友列表
     List<UserRelation> findByUserIdAndStatus(String userId, Boolean status);
 
 }

@@ -180,8 +180,8 @@ public class FriendService {
     }
 
     public void storeApplyFriend(String userId, String friendId, String userName, String friendName) {
-        UserRelation userRelation = new UserRelation(userId, friendId, friendName, false);
-        UserRelation friendRelation = new UserRelation(friendId, userId, userName, false);
+        UserRelation userRelation = new UserRelation(userId, friendId, friendName, false, "receiver");
+        UserRelation friendRelation = new UserRelation(friendId, userId, userName, false, "applicant");
         userRelationRepository.save(userRelation);
         userRelationRepository.save(friendRelation);
     }
@@ -198,7 +198,7 @@ public class FriendService {
 
     public Result nonFriends(String userId) {
         try {
-            List<UserRelation> nonFriends = userRelationRepository.findByUserIdAndStatus(userId, false);
+            List<UserRelation> nonFriends = userRelationRepository.findNonFriends(userId, false, "receiver");
             List<JSONObject> userList = new ArrayList<>();
             for(UserRelation f: nonFriends){
                 User user = this.getUserInfo(f.getFriendId());

@@ -16,6 +16,7 @@ public class UserRelation {
     private String friendId;
     private String friendName;
     private Boolean status; // true--成为好友，false--好友请求
+    private String symbol;
 
     public UserRelation() {
 
@@ -26,6 +27,14 @@ public class UserRelation {
         this.friendId = friendId;
         this.friendName = new String(Base64.getEncoder().encode(friendName.getBytes()));
         this.status = status;
+    }
+
+    public UserRelation(String userId, String friendId, String friendName, Boolean status, String symbol) {
+        this.userId = userId;
+        this.friendId = friendId;
+        this.friendName = new String(Base64.getEncoder().encode(friendName.getBytes()));
+        this.status = status;
+        this.symbol = symbol;
     }
 
     public String getFriendName() {
